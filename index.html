@@ -1,22 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Markdown to PDF Converter</title>
-        <link rel="stylesheet" href="styles.css" />
-    </head>
-    <body>
-        <div id="app">
-            <textarea
-                id="markdown-input"
-                placeholder="Enter Markdown here..."
-            ></textarea>
-            <button id="convert-button">Convert to PDF</button>
-            <div id="preview" style="display: none"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown to PDF Converter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">MD to PDF</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="pickTemplateLink"><i class="fas fa-palette"></i> Change Template</a>
+                    </li>
+                </ul>
+        
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://x.com/your-x-username" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-twitter fa-lg"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://t.me/your-telegram-username" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-linkedin fa-lg"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/your-github-username" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github fa-lg"></i>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-        <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
-        <script src="script.js"></script>
-    </body>
+    </nav>
+
+    <div class="container-fluid mt-3">
+        <div id="main-view" class="row">
+            <div class="col-md-6 p-4">
+                <div class="mb-3">
+                    
+                    <div class="input-group">
+                        <input type="text" id="documentTitle" class="form-control  no-border" placeholder="Document Title">
+                        <button id="pickTemplate" class="btn btn-light">
+                            <i class="fa-solid fa-arrow-right fa-xl" style="color: #B197FC;"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button id="saveBtn" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save 
+                    </button>
+                    <button id="exportBtn" class="btn btn-success">
+                        <i class="fas fa-file-export"></i> Export
+                    </button>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Template Instruction:</h3>
+                        <p class="card-text">To use this template.... In header section: fill in your name with Markdown heading1; Use use heading2 for your telephone number and use heading3 for your location and linked-in profile. In the content section: use as normal markdown...</p>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <h4 for="headerMarkdown" class="form-label">Header</h4>
+                    <textarea id="headerMarkdown" class="form-control" rows="5"></textarea>
+                </div>
+                <div class="mb-3">
+                    <h4 for="contentMarkdown" class="form-label">Content</h4>
+                    <textarea id="contentMarkdown" class="form-control" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="col-md-6 p-4 bg-light">
+                <h4>Preview</h4>
+                <div id="htmlPreview" class="border p-3 bg-white"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template Selection Modal -->
+    <div class="modal fade" id="templateModal" tabindex="-1" aria-labelledby="templateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="templateModalLabel">Choose a Template</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="templateGrid" class="row row-cols-1 row-cols-md-3 g-4"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="script.js" type="module"></script>
+
+
+</body>
 </html>
