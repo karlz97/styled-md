@@ -1,53 +1,60 @@
 body {
-    font-family: 'Times New Roman', serif;
-    line-height: 1.4;
+    font-family: Arial, sans-serif;
+    line-height: 1.2;
     color: #333;
     margin: 0;
     padding: 0;
-    background-color: #fff;
+    background-color: #f9f9f9;
 }
 
 .resume-container {
-    max-width: 800px;
+    max-width: 700px;
     margin: 20px auto;
-    padding: 20px;
+    padding: 30px;
     background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 header {
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 h1 {
     margin: 0;
     color: #2c3e50;
-    font-size: 24px;
+    font-size: 28px;
+    text-transform: uppercase;
 }
 
-.contact-info {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 5px;
+header p {
+    margin: 5px 0;
     font-size: 14px;
 }
 
 h2 {
     color: #2c3e50;
     font-size: 18px;
-    margin-top: 15px;
-    margin-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
 }
 
-
-.job, .degree {
-    margin-bottom: 15px;
+h3 {
+    font-size: 16px;
+    margin: 10px 0 5px 0;
 }
 
 ul {
     padding-left: 20px;
-    margin: 5px 0;
+    margin: 5px 0 10px 0;
+}
+
+li {
+    margin-bottom: 3px;
 }
 
 .skills ul {
@@ -58,31 +65,15 @@ ul {
 }
 
 .skills li {
-    background-color: #f0f0f0;
+    background-color: #e9ecef;
     color: #333;
     padding: 3px 8px;
     margin: 2px;
-    font-size: 14px;
+    font-size: 12px;
+    border-radius: 3px;
 }
 
-h3 {
-    font-size: 16px;
-    margin-bottom: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-h3 strong {
-    font-weight: bold;
-}
-
-.job-duration {
-    font-weight: normal;
-    font-style: italic;
-}
-
-.job p, .degree p {
-    margin: 2px 0;
+p {
+    margin: 5px 0;
     font-size: 14px;
 }
