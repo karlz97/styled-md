@@ -17,6 +17,16 @@ document.addEventListener('DOMContentLoaded', function() {
     let customCSS = '';
     let templates = [];
 
+    // Fetch templates data from the server
+    async function fetchTemplates() {
+        try {
+            const response = await fetch('/api/templates');
+            templates = await response.json();
+        } catch (error) {
+            console.error('Error fetching templates:', error);
+        }
+    }
+
     function convertMarkdownToHtml() {
         const headerHtml = marked.parse(headerMarkdown.value);
         const contentHtml = marked.parse(contentMarkdown.value);
@@ -40,15 +50,15 @@ document.addEventListener('DOMContentLoaded', function() {
         styleElement.textContent = customCSS;
     }
 
-    function showTemplateModal() {
+    async function showTemplateModal() {
+        await fetchTemplates();
         renderTemplateGrid();
         templateModal.show();
     }
 
     function renderTemplateGrid() {
         templateGrid.innerHTML = '';
-        for (let i = 0; i < templates.length; i++) {
-            const template = templates[i];
+        templates.forEach((template, index) => {
             const templateItem = document.createElement('div');
             templateItem.className = 'col';
             templateItem.innerHTML = `
@@ -56,15 +66,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     <img src="${template.thumbnailUrl}" class="card-img-top" alt="${template.name} preview">
                     <div class="card-body">
                         <h5 class="card-title">${template.name}</h5>
+                        <p class="card-text">${template.description}</p>
                         <button class="btn btn-primary btn-sm select-template">
                             <i class="fas fa-check"></i> Select
                         </button>
                     </div>
                 </div>
             `;
-            templateItem.querySelector('.select-template').addEventListener('click', () => selectTemplate(i));
+            templateItem.querySelector('.select-template').addEventListener('click', () => selectTemplate(index));
             templateGrid.appendChild(templateItem);
-        }
+        });
     }
 
     async function selectTemplate(index) {
