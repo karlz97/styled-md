@@ -160,6 +160,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     pickTemplateLink.addEventListener('click', showTemplateModal);
 
-    // Initialize with default template
-    selectTemplate(0);
+    // // Initialize with default template
+    // selectTemplate(0);
 });
