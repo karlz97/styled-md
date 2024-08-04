@@ -1,3 +1,4 @@
+
 body {
     font-family: 'Times New Roman', serif;
     line-height: 1.2;
@@ -5,10 +6,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
-}
 
-p{
-    white-space: pre-wrap;
 }
 
 .resume-container {
@@ -41,21 +39,23 @@ h2 {
     color: #2c3e50;
     font-size: 18px;
     margin-top: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     text-transform: uppercase;
     border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
 }
 
 h3 {
     font-size: 16px;
-    margin: 10px 0 5px 0;
+    font-weight: normal;
+    margin-top: 0px;
+    margin-bottom: 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 h3 strong {
+    font-size: 16.5px;
     text-align: left;
 }
 
@@ -68,23 +68,8 @@ li {
     margin-bottom: 3px;
 }
 
-.skills ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.skills li {
-    background-color: #e9ecef;
-    color: #333;
-    padding: 3px 8px;
-    margin: 2px;
-    font-size: 12px;
-    border-radius: 3px;
-}
 
 p {
     margin: 5px 0;
-    font-size: 14px;
+    white-space: pre-wrap;
 }
