@@ -29,8 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
     async function generateThumbnail(templateName) {
         try {
             const response = await fetch(`/generate-thumbnail/${templateName}`);
-            const result = await response.json();
-            return result.thumbnailUrl;
+            if (!response.ok) {
+                throw new Error('Failed to generate thumbnail');
+            }
+            const blob = await response.blob();
+            return URL.createObjectURL(blob);
         } catch (error) {
             console.error('Error generating thumbnail:', error);
             return null;
