@@ -1,5 +1,6 @@
 import * as html2pdf from 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
+import html2canvas from 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.esm.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const headerMarkdown = document.getElementById('headerMarkdown');
@@ -20,15 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function initTemplates() {
         try {
-            const response = await fetch('/templates');
-            if (!response.ok) {
-                throw new Error('Failed to initialize templates');
-            }
-            const result = await response.json();
-            console.log('Templates initialized:', result);
+            // Simulating template initialization
+            templates = [
+                { name: 'Template 1', content: '<h1>Template 1</h1><p>This is template 1</p>' },
+                { name: 'Template 2', content: '<h1>Template 2</h1><p>This is template 2</p>' },
+                // Add more templates as needed
+            ];
+            console.log('Templates initialized:', templates);
             alert('Templates have been initialized successfully!');
-            // Optionally, you can refresh the template grid here
-            await scanTemplates();
             await renderTemplateGrid();
         } catch (error) {
             console.error('Error initializing templates:', error);
@@ -38,25 +38,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     initTemplatesLink.addEventListener('click', initTemplates);
 
-    async function scanTemplates() {
-        try {
-            const response = await fetch('/templates');
-            templates = await response.json();
-        } catch (error) {
-            console.error('Error scanning templates:', error);
-        }
-    }
+    async function generateThumbnail(templateContent) {
+        const tempElement = document.createElement('div');
+        tempElement.innerHTML = templateContent;
+        document.body.appendChild(tempElement);
 
-    async function generateThumbnail(templateName) {
         try {
-            const response = await fetch(`/generate-thumbnail/${templateName}`);
-            if (!response.ok) {
-                throw new Error('Failed to generate thumbnail');
-            }
-            const blob = await response.blob();
-            return URL.createObjectURL(blob);
+            const canvas = await html2canvas(tempElement, {
+                width: 700,
+                height: 300,
+                scale: 1
+            });
+            document.body.removeChild(tempElement);
+            return canvas.toDataURL('image/png');
         } catch (error) {
             console.error('Error generating thumbnail:', error);
+            document.body.removeChild(tempElement);
             return null;
         }
     }
@@ -99,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             let thumbnailUrl = template.thumbnailUrl;
             if (!thumbnailUrl) {
-                thumbnailUrl = await generateThumbnail(template.name);
+                thumbnailUrl = await generateThumbnail(template.content);
                 template.thumbnailUrl = thumbnailUrl;
             }
 
