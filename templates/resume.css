@@ -56,7 +56,10 @@ h3 {
 
 h3 strong {
     font-size: 16.5px;
-    text-align: left;
+}
+
+h3 :not(strong) {
+    text-align: right;
 }
 
 ul {
