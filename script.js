@@ -15,14 +15,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const templateModal = new bootstrap.Modal(document.getElementById('templateModal'));
 
     let customCSS = '';
+    let templates = [];
 
-    // Sample templates - replace with your actual templates
-    const templates = [
-        { name: 'Default', css: '' },
-        { name: 'Dark', css: 'body { background-color: #333; color: #fff; }' },
-        { name: 'Fancy', css: 'body { font-family: "Georgia", serif; } h1 { color: #4a4a4a; }' },
-        // Add more templates as needed
-    ];
+    async function scanTemplates() {
+        try {
+            const response = await fetch('/scan-templates');
+            templates = await response.json();
+        } catch (error) {
+            console.error('Error scanning templates:', error);
+        }
+    }
+
+    async function generateThumbnail(templateName) {
+        try {
+            const response = await fetch(`/generate-thumbnail/${templateName}`);
+            const result = await response.json();
+            return result.thumbnailUrl;
+        } catch (error) {
+            console.error('Error generating thumbnail:', error);
+            return null;
+        }
+    }
 
     function convertMarkdownToHtml() {
         const headerHtml = marked.parse(headerMarkdown.value);
@@ -47,19 +60,28 @@ document.addEventListener('DOMContentLoaded', function() {
         styleElement.textContent = customCSS;
     }
 
-    function showTemplateModal() {
-        renderTemplateGrid();
+    async function showTemplateModal() {
+        await scanTemplates();
+        await renderTemplateGrid();
         templateModal.show();
     }
 
-    function renderTemplateGrid() {
+    async function renderTemplateGrid() {
         templateGrid.innerHTML = '';
-        templates.forEach((template, index) => {
+        for (let i = 0; i < templates.length; i++) {
+            const template = templates[i];
             const templateItem = document.createElement('div');
             templateItem.className = 'col';
+            
+            let thumbnailUrl = template.thumbnailUrl;
+            if (!thumbnailUrl) {
+                thumbnailUrl = await generateThumbnail(template.name);
+                template.thumbnailUrl = thumbnailUrl;
+            }
+
             templateItem.innerHTML = `
                 <div class="card h-100">
-                    <div class="template-preview card-img-top"></div>
+                    <img src="${thumbnailUrl}" class="card-img-top template-preview" alt="${template.name} preview">
                     <div class="card-body">
                         <h5 class="card-title">${template.name}</h5>
                         <button class="btn btn-primary btn-sm select-template">
@@ -68,16 +90,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             `;
-            templateItem.querySelector('.select-template').addEventListener('click', () => selectTemplate(index));
+            templateItem.querySelector('.select-template').addEventListener('click', () => selectTemplate(i));
             templateGrid.appendChild(templateItem);
-        });
+        }
     }
 
-    function selectTemplate(index) {
-        customCSS = templates[index].css;
-        applyCustomCSS();
-        templateModal.hide();
-        saveBtn.click(); // Trigger save to apply new CSS
+    async function selectTemplate(index) {
+        const template = templates[index];
+        try {
+            const response = await fetch(`/templates/${template.name}.css`);
+            customCSS = await response.text();
+            applyCustomCSS();
+            templateModal.hide();
+            saveBtn.click(); // Trigger save to apply new CSS
+        } catch (error) {
+            console.error('Error loading template CSS:', error);
+        }
     }
 
     saveBtn.addEventListener('click', function() {
