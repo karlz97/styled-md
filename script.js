@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function initTemplates() {
         try {
-            const response = await fetch('/init-templates', { method: 'POST' });
+            const response = await fetch('/init-templates');
             if (!response.ok) {
                 throw new Error('Failed to initialize templates');
             }
