@@ -17,56 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let customCSS = '';
     let templates = [];
 
-    async function initTemplates() {
-        try {
-            const templatesDir = await window.showDirectoryPicker();
-            for await (const entry of templatesDir.values()) {
-                if (entry.name.endsWith('.html')) {
-                    const file = await entry.getFile();
-                    const content = await file.text();
-                    const name = entry.name.replace('.html', '');
-                    const thumbnailUrl = await generateThumbnail(content);
-                    templates.push({ name, content, thumbnailUrl });
-                }
-            }
-            console.log('Templates initialized:', templates);
-            alert('Templates have been initialized successfully!');
-            renderTemplateGrid();
-        } catch (error) {
-            console.error('Error initializing templates:', error);
-            alert('Failed to initialize templates. Please check the console for more details.');
-        }
-    }
-
-    async function generateThumbnail(htmlContent) {
-        const blob = new Blob([htmlContent], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const iframe = document.createElement('iframe');
-        iframe.style.width = '700px';
-        iframe.style.height = '300px';
-        iframe.style.position = 'absolute';
-        iframe.style.left = '-9999px';
-        document.body.appendChild(iframe);
-
-        return new Promise((resolve, reject) => {
-            iframe.onload = async () => {
-                try {
-                    const canvas = await html2canvas(iframe.contentDocument.body, {
-                        width: 700,
-                        height: 300,
-                        scale: 1
-                    });
-                    document.body.removeChild(iframe);
-                    URL.revokeObjectURL(url);
-                    resolve(canvas.toDataURL('image/png'));
-                } catch (error) {
-                    reject(error);
-                }
-            };
-            iframe.src = url;
-        });
-    }
-
     function convertMarkdownToHtml() {
         const headerHtml = marked.parse(headerMarkdown.value);
         const contentHtml = marked.parse(contentMarkdown.value);
@@ -165,5 +115,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     pickTemplateLink.addEventListener('click', showTemplateModal);
-    initTemplatesLink.addEventListener('click', initTemplates);
 });

@@ -6,5 +6,8 @@
   "scripts": {
     "start": "echo 'This is a client-side application. Open index.html in a web browser.'"
   },
-  "dependencies": {}
+  "dependencies": {
+    "puppeteer": "^22.15.0",
+    "sharp": "^0.33.4"
+  }
 }
