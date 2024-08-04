@@ -7,6 +7,10 @@ body {
     background-color: #f9f9f9;
 }
 
+p{
+    white-space: pre-wrap;
+}
+
 .resume-container {
     max-width: 700px;
     margin: 20px auto;
