@@ -67,6 +67,13 @@ ul {
 .job h3 {
     font-size: 16px;
     margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.job h3 strong {
+    font-weight: bold;
 }
 
 .job-duration {
