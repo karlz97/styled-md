@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function initTemplates() {
         try {
-            const response = await fetch('/init-templates');
+            const response = await fetch('/templates');
             if (!response.ok) {
                 throw new Error('Failed to initialize templates');
             }
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function scanTemplates() {
         try {
-            const response = await fetch('/scan-templates');
+            const response = await fetch('/templates');
             templates = await response.json();
         } catch (error) {
             console.error('Error scanning templates:', error);
@@ -162,10 +162,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     pickTemplateLink.addEventListener('click', showTemplateModal);
-    editorLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        // If there were multiple views, you'd switch to the editor view here
-    });
 
     // Initialize with default template
     selectTemplate(0);
