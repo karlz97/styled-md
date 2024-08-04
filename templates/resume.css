@@ -40,6 +40,7 @@ h2 {
     margin-bottom: 5px;
 }
 
+
 .job, .degree {
     margin-bottom: 15px;
 }
@@ -64,7 +65,7 @@ ul {
     font-size: 14px;
 }
 
-.job h3 {
+h3 {
     font-size: 16px;
     margin-bottom: 0;
     display: flex;
@@ -72,7 +73,7 @@ ul {
     align-items: center;
 }
 
-.job h3 strong {
+h3 strong {
     font-weight: bold;
 }
 
