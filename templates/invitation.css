@@ -1,61 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Great+Vibes&display=swap');
+
 body {
-    font-family: 'Times New Roman', serif;
-    line-height: 1.2;
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1.6;
     color: #333;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background-color: #f0e6d2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 div {
     max-width: 600px;
-    margin: 20px auto;
-    padding: 30px;
+    margin: 20px;
+    padding: 40px;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+div::before, div::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(45deg, #f0e6d2, #e6d0b1);
+    z-index: -1;
+}
+
+div::before {
+    top: -100px;
+    left: -100px;
+    transform: rotate(45deg);
+}
+
+div::after {
+    bottom: -100px;
+    right: -100px;
+    transform: rotate(45deg);
 }
 
 header {
-    border-bottom: 2px solid #2c3e50;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
     text-align: center;
+    margin-bottom: 30px;
 }
 
 h1 {
+    font-family: 'Great Vibes', cursive;
+    color: #8b4513;
+    font-size: 48px;
     margin: 0;
-    color: #2c3e50;
-    font-size: 28px;
-    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 h2 {
-    color: #2c3e50;
-    font-size: 18px;
-    margin-top: 20px;
-    margin-bottom: 5px;
+    color: #8b4513;
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 15px;
     text-transform: uppercase;
-    border-bottom: 1px solid #eee;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #e6d0b1;
+    padding-bottom: 5px;
 }
 
 h3 {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: normal;
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 10px;
+    color: #8b4513;
 }
 
 p {
-    margin: 5px 0;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+strong {
+    color: #8b4513;
 }
 
 footer {
-    margin-top: 20px;
+    margin-top: 40px;
     text-align: center;
+    font-style: italic;
 }
 
 footer p {
-    margin: 0;
-    font-style: italic;
-    color: #666;
+    margin: 5px 0;
+    color: #8b4513;
+}
+
+@media (max-width: 600px) {
+    div {
+        margin: 10px;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 16px;
+    }
 }
