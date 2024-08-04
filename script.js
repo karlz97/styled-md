@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const htmlPreview = document.getElementById('htmlPreview');
     const documentTitle = document.getElementById('documentTitle');
     const pickTemplateLink = document.getElementById('pickTemplateLink');
+    const initTemplatesLink = document.getElementById('initTemplatesLink');
     const editorLink = document.getElementById('editorLink');
     const templateGrid = document.getElementById('templateGrid');
 
@@ -16,6 +17,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let customCSS = '';
     let templates = [];
+
+    async function initTemplates() {
+        try {
+            const response = await fetch('/init-templates', { method: 'POST' });
+            if (!response.ok) {
+                throw new Error('Failed to initialize templates');
+            }
+            const result = await response.json();
+            console.log('Templates initialized:', result);
+            alert('Templates have been initialized successfully!');
+            // Optionally, you can refresh the template grid here
+            await scanTemplates();
+            await renderTemplateGrid();
+        } catch (error) {
+            console.error('Error initializing templates:', error);
+            alert('Failed to initialize templates. Please check the console for more details.');
+        }
+    }
+
+    initTemplatesLink.addEventListener('click', initTemplates);
 
     async function scanTemplates() {
         try {
