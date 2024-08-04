@@ -64,15 +64,14 @@ ul {
     font-size: 14px;
 }
 
-.experience h1 {
-    font-size: 20px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-
-.job h2 {
+.job h3 {
     font-size: 16px;
     margin-bottom: 0;
+}
+
+.job-duration {
+    font-weight: normal;
+    font-style: italic;
 }
 
 .job p, .degree p {
