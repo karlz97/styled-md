@@ -1,39 +1,45 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const cheerio = require('cheerio');
 
 const templatesDir = path.join(__dirname, 'templates');
 
-function traverseTemplates() {
-    fs.readdir(templatesDir, (err, files) => {
-        if (err) {
-            console.error('Error reading templates directory:', err);
-            return;
-        }
+async function traverseTemplates() {
+    try {
+        const files = await fs.readdir(templatesDir);
+        const templateData = [];
 
-        files.forEach(file => {
+        for (const file of files) {
             if (path.extname(file) === '.html') {
                 const filePath = path.join(templatesDir, file);
-                fs.readFile(filePath, 'utf8', (err, content) => {
-                    if (err) {
-                        console.error(`Error reading file ${file}:`, err);
-                        return;
-                    }
+                const content = await fs.readFile(filePath, 'utf8');
+                const $ = cheerio.load(content);
 
-                    const $ = cheerio.load(content);
-                    const title = $('title').text();
-                    const h1 = $('h1').first().text();
-                    const firstParagraph = $('p').first().text();
+                const templateInfo = {
+                    name: path.basename(file, '.html'),
+                    title: $('title').text(),
+                    h1: $('h1').first().text(),
+                    firstParagraph: $('p').first().text(),
+                };
 
-                    console.log(`File: ${file}`);
-                    console.log(`Title: ${title}`);
-                    console.log(`First H1: ${h1}`);
-                    console.log(`First Paragraph: ${firstParagraph}`);
-                    console.log('-------------------');
-                });
+                templateData.push(templateInfo);
+
+                console.log(`File: ${file}`);
+                console.log(`Name: ${templateInfo.name}`);
+                console.log(`Title: ${templateInfo.title}`);
+                console.log(`First H1: ${templateInfo.h1}`);
+                console.log(`First Paragraph: ${templateInfo.firstParagraph}`);
+                console.log('-------------------');
             }
-        });
-    });
+        }
+
+        // Write template data to a JSON file
+        await fs.writeFile('template-data.json', JSON.stringify(templateData, null, 2));
+        console.log('Template data has been written to template-data.json');
+
+    } catch (err) {
+        console.error('Error:', err);
+    }
 }
 
 traverseTemplates();
