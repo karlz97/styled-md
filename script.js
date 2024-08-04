@@ -21,12 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function initTemplates() {
         try {
-            // Simulating template initialization
-            templates = [
-                { name: 'Template 1', content: '<h1>Template 1</h1><p>This is template 1</p>' },
-                { name: 'Template 2', content: '<h1>Template 2</h1><p>This is template 2</p>' },
-                // Add more templates as needed
-            ];
+            const response = await fetch('/scan-templates');
+            if (!response.ok) {
+                throw new Error('Failed to scan templates');
+            }
+            templates = await response.json();
             console.log('Templates initialized:', templates);
             alert('Templates have been initialized successfully!');
             await renderTemplateGrid();
