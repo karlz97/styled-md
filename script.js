@@ -1,7 +1,7 @@
 import * as html2pdf from 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const headerMarkdown = document.getElementById('headerMarkdown');
     const contentMarkdown = document.getElementById('contentMarkdown');
     const saveBtn = document.getElementById('saveBtn');
@@ -10,12 +10,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const documentTitle = document.getElementById('documentTitle');
     const pickTemplateLink = document.getElementById('pickTemplateLink');
     const initTemplatesLink = document.getElementById('initTemplatesLink');
-    const templateGrid = document.getElementById('templateGrid');
+    const modalContainer = document.getElementById('modalContainer');
 
-    const templateModal = new bootstrap.Modal(document.getElementById('templateModal'));
-
+    let templateModal;
+    let templateGrid;
     let customCSS = '';
     let templates = [];
+
+    // Load the modal HTML
+    const modalResponse = await fetch('template-modal.html');
+    const modalHtml = await modalResponse.text();
+    modalContainer.innerHTML = modalHtml;
+
+    templateModal = new bootstrap.Modal(document.getElementById('templateModal'));
+    templateGrid = document.getElementById('templateGrid');
 
     // Fetch templates data from the server
     async function fetchTemplates() {
