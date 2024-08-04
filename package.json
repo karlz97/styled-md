@@ -2,14 +2,9 @@
   "name": "markdown-to-pdf-converter",
   "version": "1.0.0",
   "description": "A web application that converts Markdown to PDF with customizable templates",
-  "main": "server.js",
+  "main": "script.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "echo 'This is a client-side application. Open index.html in a web browser.'"
   },
-  "dependencies": {
-    "express": "^4.17.1",
-    "cheerio": "^1.0.0-rc.10",
-    "puppeteer": "^10.4.0",
-    "sharp": "^0.29.1"
-  }
+  "dependencies": {}
 }
