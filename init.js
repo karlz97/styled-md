@@ -69,7 +69,7 @@ async function generateTemplateModal() {
         }
     }
 
-    // Generate template-modal.html content
+    // Generate template-market.html content
     const modalContent = `
 <!-- Template Selection Modal -->
 <div class="modal-dialog modal-lg">
@@ -104,7 +104,7 @@ async function generateTemplateModal() {
     `;
 
     // Write the generated content to template-modal.html
-    await fs.writeFile('template-modal.html', modalContent);
+    await fs.writeFile('template-market.html', modalContent);
     console.log('template-modal.html generated successfully');
 }
 

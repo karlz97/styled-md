@@ -19,76 +19,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     let selectedTags = new Set();
 
     // Load the modal HTML
-    const modalResponse = await fetch('template-modal.html');
+    const modalResponse = await fetch('template-market.html');
     const modalHtml = await modalResponse.text();
     modalContainer.innerHTML = modalHtml;
 
     templateModal = new bootstrap.Modal(document.getElementById('templateModal'));
     templateGrid = document.getElementById('templateGrid');
     tagFilter = document.getElementById('tagFilter');
-
-    // Fetch templates data from the server
-    async function fetchTemplates() {
-        try {
-            const response = await fetch('/api/templates');
-            templates = await response.json();
-            renderTagFilter();
-            renderTemplateGrid();
-        } catch (error) {
-            console.error('Error fetching templates:', error);
-        }
-    }
-
-    function renderTagFilter() {
-        const allTags = new Set();
-        templates.forEach(template => {
-            template.tags.forEach(tag => allTags.add(tag));
-        });
-
-        tagFilter.innerHTML = Array.from(allTags).map(tag => 
-            `<span class="tag-filter" data-tag="${tag}">${tag}</span>`
-        ).join(' ');
-
-        tagFilter.addEventListener('click', (e) => {
-            if (e.target.classList.contains('tag-filter')) {
-                e.target.classList.toggle('selected');
-                const tag = e.target.dataset.tag;
-                if (selectedTags.has(tag)) {
-                    selectedTags.delete(tag);
-                } else {
-                    selectedTags.add(tag);
-                }
-                renderTemplateGrid();
-            }
-        });
-    }
-
-    function renderTemplateGrid() {
-        templateGrid.innerHTML = '';
-        templates.forEach((template, index) => {
-            if (selectedTags.size === 0 || template.tags.some(tag => selectedTags.has(tag))) {
-                const templateItem = document.createElement('div');
-                templateItem.className = 'col';
-                templateItem.innerHTML = `
-                    <div class="card h-100">
-                        <img src="${template.thumbnailUrl}" class="card-img-top" alt="${template.name} preview">
-                        <div class="card-body">
-                            <h5 class="card-title">${template.name}</h5>
-                            <p class="card-text">${template.description}</p>
-                            <p class="card-text">
-                                ${template.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}
-                            </p>
-                            <button class="btn btn-primary btn-sm select-template">
-                                <i class="fas fa-check"></i> Select
-                            </button>
-                        </div>
-                    </div>
-                `;
-                templateItem.querySelector('.select-template').addEventListener('click', () => selectTemplate(index));
-                templateGrid.appendChild(templateItem);
-            }
-        });
-    }
 
     function convertMarkdownToHtml() {
         const headerHtml = marked.parse(headerMarkdown.value);
@@ -113,8 +50,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         styleElement.textContent = customCSS;
     }
 
-    async function showTemplateModal() {
-        await fetchTemplates();
+    function showTemplateModal() {
         templateModal.show();
     }
 
