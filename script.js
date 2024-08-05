@@ -6,8 +6,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     const contentMarkdown = document.getElementById('contentMarkdown');
     const saveBtn = document.getElementById('saveBtn');
     const exportBtn = document.getElementById('exportBtn');
+    
     const htmlPreviewContainer = document.getElementById('htmlPreview');
     const htmlPreview = htmlPreviewContainer.attachShadow({mode: 'open'});
+
     const documentTitle = document.getElementById('documentTitle');
     const pickTemplateLink = document.getElementById('pickTemplateLink');
     const modalContainer = document.getElementById('modalContainer');
