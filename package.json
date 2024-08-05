@@ -4,10 +4,12 @@
   "description": "A web application that converts Markdown to PDF with customizable templates",
   "main": "script.js",
   "scripts": {
-    "start": "echo 'This is a client-side application. Open index.html in a web browser.'"
+    "start": "echo 'This is a client-side application. Open index.html in a web browser.'",
+    "init": "node init.js"
   },
   "dependencies": {
     "puppeteer": "^22.15.0",
-    "sharp": "^0.33.4"
+    "sharp": "^0.33.4",
+    "cheerio": "^1.0.0-rc.12"
   }
 }
