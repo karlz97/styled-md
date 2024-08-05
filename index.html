@@ -81,28 +81,34 @@
                 </div>
             </div>
             <div class="col-md-6 p-4 bg-light" id="previewPanel">
-                <div class="row">
-                    <div class="col-6">
+                <div class="row mb-3">
+                    <div class="col-12">
                         <h4>Preview</h4>
                     </div>
-                    <div class="col-6 text-end">
-                        <div class="dropdown">
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="zooming-control">
+                            <button id="zoomInBtn" class="btn btn-light">
+                                <i class="fas fa-search-plus"></i>
                             </button>
                             <button id="zoomOutBtn" class="btn btn-light">
                                 <i class="fas fa-search-minus"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="pageSizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Change Page Size
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="pageSizeDropdown">
-                            <li><a class="dropdown-item" href="#" data-size="a3">A3</a></li>
-                            <li><a class="dropdown-item" href="#" data-size="a4">A4</a></li>
-                            <li><a class="dropdown-item" href="#" data-size="letter">Letter</a></li>
-                            <li><a class="dropdown-item" href="#" data-size="legal">Legal</a></li>
-                        </ul>
+                    <div class="col-6 text-end">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="pageSizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Change Page Size
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+                                <li><a class="dropdown-item" href="#" data-size="a3">A3</a></li>
+                                <li><a class="dropdown-item" href="#" data-size="a4">A4</a></li>
+                                <li><a class="dropdown-item" href="#" data-size="letter">Letter</a></li>
+                                <li><a class="dropdown-item" href="#" data-size="legal">Legal</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div id="previewContainer">
