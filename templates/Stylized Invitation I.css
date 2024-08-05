@@ -79,6 +79,7 @@ h3 {
 p {
     margin: 10px 0;
     font-size: 18px;
+    white-space: pre-wrap;
 }
 
 strong {

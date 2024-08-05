@@ -22,10 +22,11 @@ header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 40px;
+    height: 7em;
 }
 
 .spacer {
-    height: 4em; /* 设置空白间隔的高度为4行 */
+    height: 5em;
 }
 
 .address,
@@ -39,6 +40,7 @@ main {
 
 p {
     margin: 0 0 15px 0;
+    white-space: pre-wrap;
 }
 
 p:last-child {

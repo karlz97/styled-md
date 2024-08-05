@@ -1,0 +1,32 @@
+{
+  "templates": [
+    {
+      "name": "Concise Letter I",
+      "tags": [
+        "letter"
+      ],
+      "thumbnailUrl": "templates/Concise Letter I.png"
+    },
+    {
+      "name": "Stylized Invitation I",
+      "tags": [
+        "invitation",
+        "stylized"
+      ],
+      "thumbnailUrl": "templates/Stylized Invitation I.png"
+    },
+    {
+      "name": "Time New Roam Resume",
+      "tags": [
+        "resume"
+      ],
+      "thumbnailUrl": "templates/Time New Roam Resume.png"
+    }
+  ],
+  "allTags": [
+    "letter",
+    "invitation",
+    "stylized",
+    "resume"
+  ]
+}
