@@ -36,25 +36,7 @@ h4 { font-size: 12pt; }
   letter-spacing: 0.5px;
 }
 
-/* Preview styles */
-#htmlPreview {
-  min-height: 300px;
-  max-height: 600px;
-  overflow-y: auto;
-  font-family: 'Source Sans Pro', sans-serif;
-  line-height: 1.8;
-  color: #2c3e50;
-}
 
-#htmlPreview h1, #htmlPreview h2, #htmlPreview h3, #htmlPreview h4, #htmlPreview h5, #htmlPreview h6 {
-  font-family: 'Merriweather', serif;
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
-}
-
-#htmlPreview p {
-  margin-bottom: 1.2em;
-}
 
 /* Card styles */
 .card {
@@ -117,4 +99,12 @@ h4 { font-size: 12pt; }
 
 #tagFilter {
   margin-bottom: 15px;
+}
+
+#htmlPreview {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 15px;
+  width: 600px;
 }
