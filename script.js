@@ -130,7 +130,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     function applyCustomCSS() {
-
+        let styleElement = htmlPreview.querySelector('style');
+        if (!styleElement) {
+            styleElement = document.createElement('style');
+            htmlPreview.appendChild(styleElement);
+        }
+        styleElement.textContent = customCSS;
     }
 
     function applyTemplate(templateName) {
