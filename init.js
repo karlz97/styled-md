@@ -83,11 +83,13 @@ async function generateTemplateModal() {
                             <div class="card-body">
                                 <h5 class="card-title">${template.name}</h5>
                                 <p class="card-text">${template.description}</p>
-                                <p class="card-text"><small class="text-muted">Tags: ${template.tags.join(', ')}</small></p>
+                                <p class="card-text">
+                                    ${template.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}
+                                </p>
                             </div>
                         </div>
                     </div>
-                `).join('')}
+                `).join('\n')}
             </div>
         </div>
     </div>
