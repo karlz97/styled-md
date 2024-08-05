@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let tagFilter;
     let customCSS = '';
     let templates = [];
+    let allTags = [];
     let selectedTags = new Set();
 
     // Load the modal HTML
@@ -26,6 +27,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     templateModal = new bootstrap.Modal(document.getElementById('templateModal'));
     templateGrid = document.getElementById('templateGrid');
     tagFilter = document.getElementById('tagFilter');
+
+    // Load templates data
+    const templatesResponse = await fetch('templates.json');
+    const templatesData = await templatesResponse.json();
+    templates = templatesData.templates;
+    allTags = templatesData.allTags;
 
     function convertMarkdownToHtml() {
         const headerHtml = marked.parse(headerMarkdown.value);
@@ -51,7 +58,55 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     function showTemplateModal() {
+        renderTagFilter();
+        renderTemplateGrid();
         templateModal.show();
+    }
+
+    function renderTagFilter() {
+        tagFilter.innerHTML = allTags.map(tag => 
+            `<span class="tag-filter ${selectedTags.has(tag) ?'active' : ''}" data-tag="${tag}">${tag}</span>`
+        ).join(' ');
+
+        tagFilter.querySelectorAll('.tag-filter').forEach(tagElement => {
+            tagElement.addEventListener('click', () => {
+                const tag = tagElement.dataset.tag;
+                if (selectedTags.has(tag)) {
+                    selectedTags.delete(tag);
+                    tagElement.classList.remove('active');
+                } else {
+                    selectedTags.add(tag);
+                    tagElement.classList.add('active');
+                }
+                renderTemplateGrid();
+            });
+        });
+    }
+
+    function renderTemplateGrid() {
+        const filteredTemplates = selectedTags.size > 0
+            ? templates.filter(template => template.tags.some(tag => selectedTags.has(tag)))
+            : templates;
+
+        templateGrid.innerHTML = filteredTemplates.map((template, index) => `
+            <div class="col">
+                <div class="card h-100">
+                    <img src="${template.thumbnailUrl}" class="card-img-top" alt="${template.name} preview">
+                    <div class="card-body">
+                        <h5 class="card-title">${template.name}</h5>
+                        <p class="card-text">${template.description}</p>
+                        <p class="card-text">
+                            ${template.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}
+                        </p>
+                        <button class="btn btn-primary select-template" data-index="${index}">Select</button>
+                    </div>
+                </div>
+            </div>
+        `).join('\n');
+
+        templateGrid.querySelectorAll('.select-template').forEach(button => {
+            button.addEventListener('click', () => selectTemplate(parseInt(button.dataset.index)));
+        });
     }
 
     async function selectTemplate(index) {

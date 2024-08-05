@@ -35,7 +35,7 @@ async function extractTemplateMetadata(htmlFilePath) {
     };
 }
 
-async function generateTemplateModal() {
+async function generateTemplatesJson() {
     const templates = [];
     const allTags = new Set();
     const files = await fs.readdir(templatesDir);
@@ -69,48 +69,19 @@ async function generateTemplateModal() {
         }
     }
 
-    // Generate template-market.html content
-    const modalContent = `
-<!-- Template Selection Modal -->
-<div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="templateModalLabel">Template Market</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div id="tagFilter" class="mb-3">
-                ${Array.from(allTags).map(tag => `<span class="tag-filter" data-tag="${tag}">${tag}</span>`).join(' ')}
-            </div>
-            <div id="templateGrid" class="row row-cols-1 row-cols-md-3 g-4">
-                ${templates.map(template => `
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="${template.thumbnailUrl}" class="card-img-top" alt="${template.name} preview">
-                            <div class="card-body">
-                                <h5 class="card-title">${template.name}</h5>
-                                <p class="card-text">${template.description}</p>
-                                <p class="card-text">
-                                    ${template.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                `).join('\n')}
-            </div>
-        </div>
-    </div>
-</div>
-    `;
+    const templatesData = {
+        templates: templates,
+        allTags: Array.from(allTags)
+    };
 
-    // Write the generated content to template-modal.html
-    await fs.writeFile('template-market.html', modalContent);
-    console.log('template-modal.html generated successfully');
+    // Write the generated content to templates.json
+    await fs.writeFile('templates.json', JSON.stringify(templatesData, null, 2));
+    console.log('templates.json generated successfully');
 }
 
 async function init() {
     try {
-        await generateTemplateModal();
+        await generateTemplatesJson();
     } catch (error) {
         console.error('Error initializing:', error);
     }
