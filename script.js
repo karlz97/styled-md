@@ -47,16 +47,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         `;
     }
 
-    function applyCustomCSS() {
-        let styleElement = document.getElementById('customStyle');
-        if (!styleElement) {
-            styleElement = document.createElement('style');
-            styleElement.id = 'customStyle';
-            document.head.appendChild(styleElement);
-        }
-        styleElement.textContent = customCSS;
-    }
-
     function showTemplateModal() {
         renderTagFilter();
         renderTemplateGrid();
@@ -65,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     function renderTagFilter() {
         tagFilter.innerHTML = allTags.map(tag => 
-            `<span class="tag-filter ${selectedTags.has(tag) ?'active' : ''}" data-tag="${tag}">${tag}</span>`
+            `<span class="tag-filter ${selectedTags.has(tag) ?'selected' : ''}" data-tag="${tag}">${tag}</span>`
         ).join(' ');
 
         tagFilter.querySelectorAll('.tag-filter').forEach(tagElement => {
@@ -73,10 +63,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const tag = tagElement.dataset.tag;
                 if (selectedTags.has(tag)) {
                     selectedTags.delete(tag);
-                    tagElement.classList.remove('active');
+                    tagElement.classList.remove('selected');
                 } else {
                     selectedTags.add(tag);
-                    tagElement.classList.add('active');
+                    tagElement.classList.add('selected');
                 }
                 renderTemplateGrid();
             });
@@ -85,7 +75,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     function renderTemplateGrid() {
         const filteredTemplates = selectedTags.size > 0
-            ? templates.filter(template => template.tags.some(tag => selectedTags.has(tag)))
+            ? templates.filter(template => [...selectedTags].every(tag => template.tags.includes(tag)))
             : templates;
 
         templateGrid.innerHTML = filteredTemplates.map((template, index) => `
@@ -125,6 +115,40 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.error('Error loading template CSS:', error);
             return '';
         }
+    }
+
+    async function fetchTemplateHTML(templateName) {
+        try {
+            const response = await fetch(`templates/${templateName}.html`);
+            return await response.text();
+        } catch (error) {
+            console.error('Error loading template HTML:', error);
+            return '';
+        }
+    }
+
+    function applyCustomCSS() {
+        let previewElement = document.getElementById('htmlPreview');
+        // if (!previewElement) {
+        //     previewElement = document.createElement('style');
+        //     previewElement.id = 'customStyle';
+        //     document.head.appendChild(previewElement);
+        // }
+        previewElement.textContent = customCSS;
+    }
+
+    function applyTemplate(templateName) {
+        fetchTemplateHTML(templateName).then(html => {
+            // Parse the fetched HTML text
+            const parser = new DOMParser();
+            const templateDoc = parser.parseFromString(htmlText, 'text/html');
+
+            // Select all elements with class "input-field"
+            const inputFieldsNodeList = templateDoc.querySelectorAll('.input-field');
+
+            // Convert NodeList to Array
+            const inputFieldsArray = Array.from(inputFieldsNodeList);
+        });
     }
 
     saveBtn.addEventListener('click', function() {
