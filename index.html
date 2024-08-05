@@ -47,7 +47,7 @@
 
     <div class="container-fluid mt-3">
         <div id="main-view" class="row">
-            <div class="col-md-6 p-4">
+            <div class="col-md-6 p-4" name="editor">
                 <div class="mb-3">
                     
                     <div class="input-group">
@@ -80,14 +80,28 @@
                     <textarea id="contentMarkdown" class="form-control" rows="10"></textarea>
                 </div>
             </div>
-            <div class="col-md-6 p-4 bg-light">
+            <div class="col-md-6 p-4 bg-light" name="preview">
                 <h4>Preview</h4>
-                <div id="htmlPreview" class="border p-3 bg-white"></div>
+                <div id="htmlPreview" class="border p-3 bg-white">
+                    <header class="input-field invitation-header">
+                        <h1>John Doe</h1>
+                        <h2>123-456-7890</h2>
+                        <h3>Location: New York, NY</h3>
+                        <h3><a href="https://linkedin.com/in/johndoe">LinkedIn</a></h3>
+                    </header>
+                    <main class="input-field invitation-main">
+                        <p>Hi, I'm John Doe. I'm a software developer with 5 years of experience...</p>
+                    </main>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="modalContainer"></div>
+    <div class="modal fade" id="templateModal" tabindex="-1" aria-labelledby="templateModalLabel" aria-hidden="true">
+        <div id="modalContainer" ></div>
+    </div>
+    
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
