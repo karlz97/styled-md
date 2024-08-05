@@ -129,12 +129,20 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     function applyCustomCSS() {
         let previewElement = document.getElementById('htmlPreview');
-        // if (!previewElement) {
-        //     previewElement = document.createElement('style');
-        //     previewElement.id = 'customStyle';
-        //     document.head.appendChild(previewElement);
-        // }
-        previewElement.textContent = customCSS;
+        if (previewElement) {
+            // Remove any existing style element
+            const existingStyle = previewElement.querySelector('style');
+            if (existingStyle) {
+                existingStyle.remove();
+            }
+            
+            // Create a new style element
+            const styleElement = document.createElement('style');
+            styleElement.textContent = customCSS;
+            
+            // Prepend the style element to htmlPreview
+            previewElement.prepend(styleElement);
+        }
     }
 
     function applyTemplate(templateName) {
