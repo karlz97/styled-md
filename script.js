@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     const htmlPreview = document.getElementById('htmlPreview');
     const documentTitle = document.getElementById('documentTitle');
     const pickTemplateLink = document.getElementById('pickTemplateLink');
-    const initTemplatesLink = document.getElementById('initTemplatesLink');
     const modalContainer = document.getElementById('modalContainer');
 
     let templateModal;
@@ -59,8 +58,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     async function showTemplateModal() {
-        await fetchTemplates();
-        renderTemplateGrid();
+        // await fetchTemplates();
+        // renderTemplateGrid();
         templateModal.show();
     }
 
