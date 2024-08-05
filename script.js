@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     const contentMarkdown = document.getElementById('contentMarkdown');
     const saveBtn = document.getElementById('saveBtn');
     const exportBtn = document.getElementById('exportBtn');
-    const htmlPreview = document.getElementById('htmlPreview');
+    const htmlPreviewContainer = document.getElementById('htmlPreview');
+    const htmlPreview = htmlPreviewContainer.attachShadow({mode: 'open'});
     const documentTitle = document.getElementById('documentTitle');
     const pickTemplateLink = document.getElementById('pickTemplateLink');
     const modalContainer = document.getElementById('modalContainer');
@@ -128,21 +129,22 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     function applyCustomCSS() {
-        let previewElement = document.getElementById('htmlPreview');
-        if (previewElement) {
-            // Remove any existing style element
-            const existingStyle = previewElement.querySelector('style');
-            if (existingStyle) {
-                existingStyle.remove();
-            }
-            
-            // Create a new style element
-            const styleElement = document.createElement('style');
-            styleElement.textContent = customCSS;
-            
-            // Prepend the style element to htmlPreview
-            previewElement.prepend(styleElement);
+        // Clear existing content
+        while (htmlPreview.firstChild) {
+            htmlPreview.removeChild(htmlPreview.firstChild);
         }
+        
+        // Create a new style element
+        const styleElement = document.createElement('style');
+        styleElement.textContent = customCSS;
+        
+        // Append the style element to the shadow DOM
+        htmlPreview.appendChild(styleElement);
+        
+        // Create a div to hold the content
+        const contentDiv = document.createElement('div');
+        contentDiv.id = 'preview-content';
+        htmlPreview.appendChild(contentDiv);
     }
 
     function applyTemplate(templateName) {
@@ -161,8 +163,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     saveBtn.addEventListener('click', function() {
         const generatedHtml = convertMarkdownToHtml();
-        htmlPreview.innerHTML = generatedHtml;
         applyCustomCSS();
+        const contentDiv = htmlPreview.getElementById('preview-content');
+        contentDiv.innerHTML = generatedHtml;
     });
 
     exportBtn.addEventListener('click', function() {
