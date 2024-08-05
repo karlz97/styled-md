@@ -12,10 +12,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     const documentTitle = document.getElementById('documentTitle');
     const pickTemplateLink = document.getElementById('pickTemplateLink');
     const modalContainer = document.getElementById('modalContainer');
+    const htmlPreviewContainer = document.getElementById('previewContainer');
+    const pageSizeDropdown = document.getElementById('pageSizeDropdown');
+
 
     let templateModal;
     let templateGrid;
     let tagFilter;
+    let currentPageSize = 'a4';
     let customCSS = '';
     let templates = [];
     let allTags = [];
@@ -182,4 +186,67 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 
     pickTemplateLink.addEventListener('click', showTemplateModal);
+
+    // Page size change functionality -- not working, need to fix:
+    pageSizeDropdown.addEventListener('click', function(e) {
+        console.log('Clicked:', e.target);
+        if (e.target.classList.contains('dropdown-item')) {
+            const newSize = e.target.getAttribute('data-size');
+            changePageSize(newSize);
+        }
+    });
+
+    function changePageSize(size) {
+        currentPageSize = size;
+        htmlPreview.className = ''; // Remove all classes
+        htmlPreview.classList.add(`page-size-${size}`);
+        
+        // Update the preview container's dimensions
+        const dimensions = getPageDimensions(size);
+        htmlPreview.style.width = `${dimensions.width}px`;
+        htmlPreview.style.height = `${dimensions.height}px`;
+        
+        // Force reflow to ensure the changes take effect
+        htmlPreview.offsetHeight;
+        console.log('Page size:', size);
+    }
+
+    function getPageDimensions(size) {
+        const dpi = 96; // Standard screen DPI
+        switch (size) {
+            case 'a3':
+                return { width: 11.7 * dpi, height: 16.5 * dpi };
+            case 'a4':
+                return { width: 8.27 * dpi, height: 11.7 * dpi };
+            case 'letter':
+                return { width: 8.5 * dpi, height: 11 * dpi };
+            default:
+                return { width: 8.27 * dpi, height: 11.7 * dpi }; // Default to A4
+        }
+    }
+    let scale = 1;
+    const zoomInBtn = document.getElementById('zoomInBtn');
+    const zoomOutBtn = document.getElementById('zoomOutBtn');
+    
+    if (zoomInBtn && zoomOutBtn) {
+        zoomInBtn.addEventListener('click', zoomIn);
+        zoomOutBtn.addEventListener('click', zoomOut);
+    }
+    
+    function zoomOut() {
+        scale += 0.1;
+        updateScale();
+    }
+    
+    function zoomIn() {
+        if (scale > 0.1) {
+            scale -= 0.1;
+            updateScale();
+        }
+    }
+    
+    function updateScale() {
+        htmlPreview.style.transform = `scale(${scale})`;
+        console.log('Scale:', scale);
+    }
 });
