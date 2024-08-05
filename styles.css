@@ -113,7 +113,7 @@ h4 {
     }
 }
 
-.tag {
+.tag, .tag-filter {
     display: inline-block;
     background-color: #f0f0f0;
     color: #333;
@@ -123,9 +123,19 @@ h4 {
     font-size: 0.8em;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.tag:hover {
+.tag:hover, .tag-filter:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.tag-filter.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#tagFilter {
+    margin-bottom: 15px;
 }
