@@ -54,7 +54,7 @@ Experienced professional with a track record of...
             document.addEventListener('DOMContentLoaded', function() {
                 const inputFields = document.querySelectorAll('.input-field');
                 inputFields.forEach(field => {
-                    const markdown = field.innerHTML.trim();
+                    const markdown = field.textContent.trim();
                     field.innerHTML = marked.parse(markdown);
                 });
             });

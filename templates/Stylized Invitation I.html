@@ -10,27 +10,42 @@
         />
         <title>Formal Invitation</title>
         <link rel="stylesheet" href="Stylized Invitation I.css" />
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     </head>
     <body>
         <div>
             <header class="input-field invitation-header">
-                <h1>Annual Gala Dinner</h1>
+# Annual Gala Dinner
             </header>
             <main class="input-field invitation-main">
-                <p>Dear [Guest Name],</p>
-                <p>You are cordially invited to attend our Annual Gala Dinner...</p>
-                <h2>Event Details</h2>
-                <p><strong>Date:</strong> Saturday, September 15, 2024</p>
-                <p><strong>Time:</strong> 7:00 PM</p>
-                <p><strong>Venue:</strong> Grand Ballroom, Luxury Hotel</p>
-                <p><strong>Dress Code:</strong> Black Tie</p>
-                <h2>RSVP</h2>
-                <p>Please RSVP by August 15, 2024 to...</p>
+Dear [Guest Name],
+
+You are cordially invited to attend our Annual Gala Dinner...
+
+## Event Details
+
+**Date:** Saturday, September 15, 2024
+**Time:** 7:00 PM
+**Venue:** Grand Ballroom, Luxury Hotel
+**Dress Code:** Black Tie
+
+## RSVP
+
+Please RSVP by August 15, 2024 to...
             </main>
             <footer class="input-field invitation-footer">
-                <h3>John Smith</h3>
-                <p>Event Organizer</p>
+### John Smith
+Event Organizer
             </footer>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const inputFields = document.querySelectorAll('.input-field');
+                inputFields.forEach(field => {
+                    const markdown = field.textContent.trim();
+                    field.innerHTML = marked.parse(markdown);
+                });
+            });
+        </script>
     </body>
 </html>
