@@ -37,6 +37,7 @@ async function extractTemplateMetadata(htmlFilePath) {
 
 async function generateTemplateModal() {
     const templates = [];
+    const allTags = new Set();
     const files = await fs.readdir(templatesDir);
 
     for (const file of files) {
@@ -56,10 +57,13 @@ async function generateTemplateModal() {
                 console.log(`Thumbnail generated for ${file}`);
             }
 
+            const tags = metadata.tag.split(',').map(tag => tag.trim());
+            tags.forEach(tag => allTags.add(tag));
+
             templates.push({
                 name: metadata.name,
                 description: metadata.description,
-                tags: metadata.tag.split(',').map(tag => tag.trim()),
+                tags: tags,
                 thumbnailUrl: `templates/${path.basename(file, '.html')}.png`
             });
         }
@@ -75,6 +79,9 @@ async function generateTemplateModal() {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+            <div id="tagFilter" class="mb-3">
+                ${Array.from(allTags).map(tag => `<span class="tag-filter" data-tag="${tag}">${tag}</span>`).join(' ')}
+            </div>
             <div id="templateGrid" class="row row-cols-1 row-cols-md-3 g-4">
                 ${templates.map(template => `
                     <div class="col">
