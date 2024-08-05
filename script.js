@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const saveBtn = document.getElementById('saveBtn');
     const exportBtn = document.getElementById('exportBtn');
     
-    const htmlPreviewContainer = document.getElementById('htmlPreview');
-    const htmlPreview = htmlPreviewContainer.attachShadow({mode: 'open'});
+    const htmlPreview = document.getElementById('htmlPreview');
 
     const documentTitle = document.getElementById('documentTitle');
     const pickTemplateLink = document.getElementById('pickTemplateLink');
@@ -131,22 +130,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     function applyCustomCSS() {
-        // Clear existing content
-        while (htmlPreview.firstChild) {
-            htmlPreview.removeChild(htmlPreview.firstChild);
+        let styleElement = htmlPreview.querySelector('style');
+        if (!styleElement) {
+            styleElement = document.createElement('style');
+            htmlPreview.appendChild(styleElement);
         }
-        
-        // Create a new style element
-        const styleElement = document.createElement('style');
         styleElement.textContent = customCSS;
-        
-        // Append the style element to the shadow DOM
-        htmlPreview.appendChild(styleElement);
-        
-        // Create a div to hold the content
-        const contentDiv = document.createElement('div');
-        contentDiv.id = 'preview-content';
-        htmlPreview.appendChild(contentDiv);
     }
 
     function applyTemplate(templateName) {
@@ -166,8 +155,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     saveBtn.addEventListener('click', function() {
         const generatedHtml = convertMarkdownToHtml();
         applyCustomCSS();
-        const contentDiv = htmlPreview.getElementById('preview-content');
-        contentDiv.innerHTML = generatedHtml;
+        htmlPreview.innerHTML = generatedHtml;
     });
 
     exportBtn.addEventListener('click', function() {
