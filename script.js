@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const exportBtn = document.getElementById('exportBtn');
 
     const htmlPreview = document.getElementById('htmlPreview');
-
+    const htmlPreviewContent = document.getElementById('htmlPreviewContent');
     const documentTitle = document.getElementById('documentTitle');
     const pickTemplateLink = document.getElementById('pickTemplateLink');
     const modalContainer = document.getElementById('modalContainer');
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         customCSS = await fetchTemplateCSS(template.name);
         applyCustomCSS();
         templateModal.hide();
-        saveBtn.click(); // Trigger save to apply new CSS
+        // saveBtn.click(); // Trigger save to apply new CSS
     }
 
     async function fetchTemplateCSS(templateName) {
@@ -133,9 +133,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         let styleElement = htmlPreview.querySelector('style');
         if (!styleElement) {
             styleElement = document.createElement('style');
-            htmlPreview.appendChild(styleElement);
+            htmlPreview.prepend(styleElement);
         }
-        styleElement.textContent = customCSS;
+        styleElement.textContent = `@scope {\n${customCSS}\n}`;
     }
 
     function applyTemplate(templateName) {
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     saveBtn.addEventListener('click', function() {
         const generatedHtml = convertMarkdownToHtml();
         applyCustomCSS();
-        htmlPreview.innerHTML = generatedHtml;
+        htmlPreviewContent.innerHTML = generatedHtml;
     });
 
     exportBtn.addEventListener('click', function() {

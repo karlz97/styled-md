@@ -56,13 +56,6 @@ h4 { font-size: 12pt; }
   margin-bottom: 1.2em;
 }
 
-/* Template preview styles */
-.template-preview {
-  height: 150px;
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
-}
-
 /* Card styles */
 .card {
   border: none;

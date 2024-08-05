@@ -47,7 +47,7 @@
 
     <div class="container-fluid mt-3">
         <div id="main-view" class="row">
-            <div class="col-md-6 p-4" name="editor">
+            <div class="col-md-6 p-4" id="editorPanel">
                 <div class="mb-3">
                     
                     <div class="input-group">
@@ -80,18 +80,22 @@
                     <textarea id="contentMarkdown" class="form-control" rows="10"></textarea>
                 </div>
             </div>
-            <div class="col-md-6 p-4 bg-light" name="preview">
+            <div class="col-md-6 p-4 bg-light" id="previewPanel">
                 <h4>Preview</h4>
-                <div id="htmlPreview" class="border p-3 bg-white">
-                    <header class="input-field invitation-header">
-                        <h1>John Doe</h1>
-                        <h2>123-456-7890</h2>
-                        <h3>Location: New York, NY</h3>
-                        <h3><a href="https://linkedin.com/in/johndoe">LinkedIn</a></h3>
-                    </header>
-                    <main class="input-field invitation-main">
-                        <p>Hi, I'm John Doe. I'm a software developer with 5 years of experience...</p>
-                    </main>
+                <div class="border p-3 bg-white">
+                    <div id="htmlPreview">
+                        <div id="htmlPreviewContent">
+                            <header class="input-field invitation-header">
+                                <h1>John Doe</h1>
+                                <h2>123-456-7890</h2>
+                                <h3>Location: New York, NY</h3>
+                                <h3><a href="https://linkedin.com/in/johndoe">LinkedIn</a></h3>
+                            </header>
+                            <main class="input-field invitation-main">
+                                <p>Hi, I'm John Doe. I'm a software developer with 5 years of experience...</p>
+                            </main>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
