@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="template-meta" 
+            template-name="Professional Resume" 
+            template-tag="resume" 
+            description="A professional resume template."
+        />
+        <title>Professional Resume</title>
+        <link rel="stylesheet" href="Professional Resume.css" />
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+    <body>
+        <div class="resume-container">
+            <header>
+                <div class="resume-header input-field" name="Header">
+# John Doe
+## (123) 456-7890
+### City, Country | [LinkedIn Profile](https://www.linkedin.com/in/johndoe)
+                </div>
+            </header>
+            <main>
+                <div class="resume-main input-field" name="Content">
+## Professional Summary
+
+Experienced professional with a track record of...
+
+## Skills
+
+- Skill 1
+- Skill 2
+- Skill 3
+
+## Work Experience
+
+### Company Name | Position | Date - Present
+
+- Responsibility 1
+- Responsibility 2
+- Responsibility 3
+
+## Education
+
+### University Name | Degree | Graduation Year
+
+- Relevant coursework
+- Achievements
+                </div>
+            </main>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const inputFields = document.querySelectorAll('.input-field');
+                inputFields.forEach(field => {
+                    const markdown = field.innerHTML.trim();
+                    field.innerHTML = marked.parse(markdown);
+                });
+            });
+        </script>
+    </body>
+</html>

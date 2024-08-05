@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="template-meta" 
+            template-name="Business Proposal" 
+            template-tag="proposal" 
+            description="A business proposal template."
+        />
+        <title>Business Proposal</title>
+        <link rel="stylesheet" href="Business Proposal.css" />
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+    <body>
+        <div class="proposal-container">
+            <header>
+                <div class="proposal-header input-field" name="Header">
+# Business Proposal
+## Company Name
+### Date: [Current Date]
+                </div>
+            </header>
+            <main>
+                <div class="proposal-main input-field" name="Content">
+## Executive Summary
+
+[Brief overview of the proposal]
+
+## Problem Statement
+
+[Describe the problem or opportunity]
+
+## Proposed Solution
+
+[Outline your proposed solution]
+
+## Timeline and Milestones
+
+[List key milestones and dates]
+
+## Budget
+
+[Provide a breakdown of costs]
+
+## Conclusion
+
+[Summarize the benefits and call to action]
+                </div>
+            </main>
+            <footer>
+                <div class="proposal-footer input-field" name="Footer">
+**Contact:** John Doe
+**Email:** john.doe@company.com
+**Phone:** (123) 456-7890
+                </div>
+            </footer>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const inputFields = document.querySelectorAll('.input-field');
+                inputFields.forEach(field => {
+                    const markdown = field.innerHTML.trim();
+                    field.innerHTML = marked.parse(markdown);
+                });
+            });
+        </script>
+    </body>
+</html>
