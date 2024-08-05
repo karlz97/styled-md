@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const contentMarkdown = document.getElementById('contentMarkdown');
     const saveBtn = document.getElementById('saveBtn');
     const exportBtn = document.getElementById('exportBtn');
-    
+
     const htmlPreview = document.getElementById('htmlPreview');
 
     const documentTitle = document.getElementById('documentTitle');
@@ -130,12 +130,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     function applyCustomCSS() {
-        let styleElement = htmlPreview.querySelector('style');
-        if (!styleElement) {
-            styleElement = document.createElement('style');
-            htmlPreview.appendChild(styleElement);
-        }
-        styleElement.textContent = customCSS;
+
     }
 
     function applyTemplate(templateName) {
