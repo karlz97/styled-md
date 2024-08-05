@@ -3,6 +3,7 @@ const path = require('path');
 const puppeteer = require('puppeteer');
 const sharp = require('sharp');
 const cheerio = require('cheerio');
+const marked = require('marked');
 
 const templatesDir = path.join(__dirname, 'templates');
 
@@ -10,7 +11,27 @@ async function generateThumbnail(htmlFilePath, outputPath) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setViewport({width: 800, height: 800, deviceScaleFactor: 0});
-    await page.goto(`file://${htmlFilePath}`);
+    
+    // Read the HTML file
+    const htmlContent = await fs.readFile(htmlFilePath, 'utf-8');
+    
+    // Inject the Marked library and our custom script
+    const modifiedHtmlContent = htmlContent.replace('</body>', `
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const inputFields = document.querySelectorAll('.input-field');
+                inputFields.forEach(field => {
+                    const markdown = field.innerHTML.trim();
+                    field.innerHTML = marked.parse(markdown);
+                });
+            });
+        </script>
+    </body>`);
+
+    // Set the content and wait for it to load
+    await page.setContent(modifiedHtmlContent, { waitUntil: 'networkidle0' });
+    
     await page.screenshot({ path: outputPath, fullPage: false });
     await browser.close();
 
