@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const exportBtn = document.getElementById('exportBtn');
 
     const htmlPreview = document.getElementById('htmlPreview');
+    
     const htmlPreviewContent = document.getElementById('htmlPreviewContent');
     const documentTitle = document.getElementById('documentTitle');
     const pickTemplateLink = document.getElementById('pickTemplateLink');
@@ -40,18 +41,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     templates = templatesData.templates;
     allTags = templatesData.allTags;
 
-    function convertMarkdownToHtml() {
-        const headerHtml = marked.parse(headerMarkdown.value);
-        const contentHtml = marked.parse(contentMarkdown.value);
-        return `
-            <div class="header">
-                ${headerHtml}
-            </div>
-            <div class="content">
-                ${contentHtml}
-            </div>
-        `;
-    }
 
     function showTemplateModal() {
         renderTagFilter();
@@ -152,7 +141,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         editorInputFields.innerHTML = ''; // Clear existing fields
 
         inputFields.forEach((field, index) => {
-            const name = field.getAttribute('name') || `Section ${index + 1}`;
+            const name = field.getAttribute('name') || 
+                // field.tagName;
+                (s => s.at(0).toUpperCase()+s.slice(1).toLowerCase())(field.tagName);
             const content = field.innerHTML.trim();
 
             const section = document.createElement('div');
@@ -185,45 +176,44 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     saveBtn.addEventListener('click', function() {
-        const generatedHtml = convertMarkdownToHtml();
         applyCustomCSS();
-        htmlPreviewContent.innerHTML = generatedHtml;
+        console.log('Custom CSS applied');
+        updatePreview();
+        console.log('Preview updated..');
     });
 
-    exportBtn.addEventListener('click', function() {
-        const generatedHtml = convertMarkdownToHtml();
-        const element = document.createElement('div');
-        element.innerHTML = generatedHtml;
+    // exportBtn.addEventListener('click', function() {
+    //     const generatedHtml = convertMarkdownToHtml();
+    //     const element = document.createElement('div');
+    //     element.innerHTML = generatedHtml;
         
-        const filename = documentTitle.value || 'exported_document';
+    //     const filename = documentTitle.value || 'exported_document';
         
-        const opt = {
-            margin:       10,
-            filename:     `${filename}.pdf`,
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
+    //     const opt = {
+    //         margin:       10,
+    //         filename:     `${filename}.pdf`,
+    //         image:        { type: 'jpeg', quality: 0.98 },
+    //         html2canvas:  { scale: 2 },
+    //         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    //     };
 
-        // Apply custom CSS to the element before generating PDF
-        const styleElement = document.createElement('style');
-        styleElement.textContent = customCSS;
-        element.appendChild(styleElement);
+    //     // Apply custom CSS to the element before generating PDF
+    //     const styleElement = document.createElement('style');
+    //     styleElement.textContent = customCSS;
+    //     element.appendChild(styleElement);
 
-        html2pdf().set(opt).from(element).save();
-    });
+    //     html2pdf().set(opt).from(element).save();
+    // });
 
     pickTemplateLink.addEventListener('click', showTemplateModal);
 
     // Page size change functionality -- not working, need to fix:
-    console.log("1111");
     pageSizeDropdown.querySelectorAll('.dropdown-item').forEach(function(item) {
         item.addEventListener('click', function(event) {
             console.log(event.target.getAttribute('data-size'));
             changePageSize(event.target.getAttribute('data-size'));
         });
     });
-    console.log("2222");
 
     function changePageSize(size) {
         currentPageSize = size;

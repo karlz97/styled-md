@@ -68,16 +68,20 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <h3 class="card-title">Template Instruction:</h3>
-                        <p class="card-text">To use this template.... In header section: fill in your name with Markdown heading1; Use use heading2 for your telephone number and use heading3 for your location and linked-in profile. In the content section: use as normal markdown...</p>
+                        <div id="editor-instruction">
+                            <p class="card-text">To use this template.... In header section: fill in your name with Markdown heading1; Use use heading2 for your telephone number and use heading3 for your location and linked-in profile. In the content section: use as normal markdown...</p>
+                        </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <h4 for="headerMarkdown" class="form-label">Header</h4>
-                    <textarea id="headerMarkdown" class="form-control" rows="5"></textarea>
-                </div>
-                <div class="mb-3">
-                    <h4 for="contentMarkdown" class="form-label">Content</h4>
-                    <textarea id="contentMarkdown" class="form-control" rows="10"></textarea>
+                <div id="editor-input-fields">
+                    <div class="mb-3">
+                        <h4 for="headerMarkdown" class="form-label">Header</h4>
+                        <textarea id="headerMarkdown" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <h4 for="contentMarkdown" class="form-label">Content</h4>
+                        <textarea id="contentMarkdown" class="form-control" rows="10"></textarea>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 p-4 bg-light" id="previewPanel">
