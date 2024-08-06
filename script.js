@@ -206,11 +206,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const dimensions = getPageDimensions(size);
         htmlPreview.style.width = `${dimensions.width}px`;
         htmlPreview.style.height = `${dimensions.height}px`;
-        // justify-content: center;
-        // align-items: center;
-        htmlPreview.style.justifyContent = 'center';
-        htmlPreview.style.alignItems = 'center';
 
+        
         // Force reflow to ensure the changes take effect
         htmlPreview.offsetHeight;
         console.log('Page size:', size);
