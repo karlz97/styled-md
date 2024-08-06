@@ -116,6 +116,18 @@ h4 { font-size: 12pt; }
   border: 1px solid #dee2e6;
   border-radius: 4px;
   background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#htmlPreview {
+  padding: 30px;
+  margin-bottom: 15px;
+  overflow: auto;
+  width: 700px;
+  background-color: #80bdff;
+  transform-origin: center center;
 }
 
 .zooming-control {
