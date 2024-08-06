@@ -2,6 +2,7 @@
   "templates": [
     {
       "name": "Concise Letter I",
+      "description": "A concise letter template.",
       "tags": [
         "letter"
       ],
@@ -9,6 +10,7 @@
     },
     {
       "name": "Stylized Invitation I",
+      "description": "An invitation template with a stylized design.",
       "tags": [
         "invitation",
         "stylized"
@@ -17,6 +19,7 @@
     },
     {
       "name": "Time New Roam Resume",
+      "description": "A professional resume template with a clean design.",
       "tags": [
         "resume"
       ],

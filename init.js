@@ -48,11 +48,11 @@ async function extractTemplateMetadata(htmlFilePath) {
     const htmlContent = await fs.readFile(htmlFilePath, 'utf-8');
     const $ = cheerio.load(htmlContent);
     const metaTag = $('meta[name="template-meta"]');
-    
+    console.log(metaTag.attr('template-description'));
     return {
         name: metaTag.attr('template-name'),
         tag: metaTag.attr('template-tag'),
-        description: metaTag.attr('description')
+        description: metaTag.attr('template-description')
     };
 }
 

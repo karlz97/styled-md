@@ -113,11 +113,10 @@ h4 { font-size: 12pt; }
 
 #htmlPreview {
   padding: 30px;
-  margin-bottom: 15px;
   background-color: #80bdff;
   transform-origin: top left;
-  width: 900px;
-  min-height: 100%;
+  width: 850px;
+  height: 850px;
   overflow: visible;
 }
 

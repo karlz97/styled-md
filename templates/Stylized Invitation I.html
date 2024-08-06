@@ -6,18 +6,19 @@
         <meta name="template-meta"
             template-name="Stylized Invitation I"
             template-tag="invitation, stylized"
-            desciption="An invitation template with a stylized design."
+            template-description="An invitation template with a stylized design."
         />
         <title>Formal Invitation</title>
         <link rel="stylesheet" href="Stylized Invitation I.css" />
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     </head>
     <body>
-        <div>
-            <header class="input-field invitation-header">
+        <div id="letter-frame">
+            <div id="letter-content">
+                <header class="input-field invitation-header">
 # Annual Gala Dinner
-            </header>
-            <main class="input-field invitation-main">
+                </header>
+                <main class="input-field invitation-main">
 Dear [Guest Name],
 
 You are cordially invited to attend our Annual Gala Dinner...
@@ -32,11 +33,12 @@ You are cordially invited to attend our Annual Gala Dinner...
 ## RSVP
 
 Please RSVP by August 15, 2024 to...
-            </main>
-            <footer class="input-field invitation-footer">
+                </main>
+                <footer class="input-field invitation-footer">
 ### John Smith
 Event Organizer
-            </footer>
+                </footer>
+            </div>
         </div>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
