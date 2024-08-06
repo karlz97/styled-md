@@ -6,10 +6,25 @@ document.addEventListener('DOMContentLoaded', async function() {
     const contentMarkdown = document.getElementById('contentMarkdown');
     const saveBtn = document.getElementById('saveBtn');
     const exportBtn = document.getElementById('exportBtn');
+    const previewContainer = document.getElementById('previewContainer');
+    const previewCanvas = document.getElementById('previewCanvas');
 
-    const htmlPreview = document.getElementById('htmlPreview');
+    const htmlPreview = previewCanvas.attachShadow({mode: 'open'});     // const htmlPreview = document.getElementById('htmlPreview');
     
-    const htmlPreviewContent = document.getElementById('htmlPreviewContent');
+    htmlPreview.innerHTML = `
+        <div id="htmlPreviewContent">
+            <header class="input-field invitation-header">
+                <h1>John Doe123</h1>
+                <h2>123-456-7890</h2>
+                <h3>Location: New York, NY</h3>
+                <h3><a href="https://linkedin.com/in/johndoe">LinkedIn</a></h3>
+            </header>
+            <main class="input-field invitation-main">
+                <p>Hi, I'm John Doe. I'm a software developer with 5 years of experience...</p>
+            </main>
+        </div>`;
+    const htmlPreviewContent = htmlPreview.getElementById('htmlPreviewContent');    //const htmlPreviewContent = document.getElementById('htmlPreviewContent');
+    
     const documentTitle = document.getElementById('documentTitle');
     const pickTemplateLink = document.getElementById('pickTemplateLink');
     const modalContainer = document.getElementById('modalContainer');
@@ -100,6 +115,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         applyCustomCSS();
         templateModal.hide();
         await applyTemplate(template.name);
+        updatePreview()
     }
 
     async function fetchTemplateCSS(templateName) {
@@ -128,7 +144,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             styleElement = document.createElement('style');
             htmlPreview.prepend(styleElement);
         }
-        styleElement.textContent = `@scope {\n${customCSS}\n}`;
+        styleElement.textContent = customCSS;
+        //styleElement.textContent = `@scope {\n${customCSS}\n}`;
     }
 
     async function applyTemplate(templateName) {
@@ -217,17 +234,24 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     function changePageSize(size) {
         currentPageSize = size;
-        htmlPreview.className = ''; // Remove all classes
-        htmlPreview.classList.add(`page-size-${size}`);
+        previewCanvas.className = ''; // Remove all classes
+        previewCanvas.classList.add(`page-size-${size}`);
         
         // Update the preview container's dimensions
         const dimensions = getPageDimensions(size);
-        htmlPreview.style.width = `${dimensions.width}px`;
-        htmlPreview.style.height = `${dimensions.height}px`;
+        previewCanvas.style.width = `${dimensions.width}px`;
+        previewCanvas.style.height = `${dimensions.height}px`;
 
-        
+        // Ensure the parent element is relatively positioned
+        previewCanvas.parentElement.style.position = 'relative';
+
+        // Align to the top left of the parent element
+        previewCanvas.style.position = 'absolute';
+        previewCanvas.style.top = '0';
+        previewCanvas.style.left = '0';
+
         // Force reflow to ensure the changes take effect
-        htmlPreview.offsetHeight;
+        previewCanvas.offsetHeight;
         console.log('Page size:', size);
     }
 
@@ -266,7 +290,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     
     function updateScale() {
-        htmlPreview.style.transform = `scale(${scale})`;
+        previewCanvas.style.transform = `scale(${scale})`;
         console.log('Scale:', scale);
     }
 });

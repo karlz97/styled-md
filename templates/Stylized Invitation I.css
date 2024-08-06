@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Great+Vibes&display=swap');
 
-body {
+#body {
     font-family: 'Cormorant Garamond', serif;
     line-height: 1.6;
     color: #333;
