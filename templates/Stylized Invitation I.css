@@ -17,6 +17,8 @@ body {
     background-color: #f0e6d2;
     min-height: 100vh;
     padding: 30px;
+    border: 20px solid #8b4513;
+    box-shadow: 0 0 0 10px #f0e6d2, 0 0 0 20px #e6d0b1;
 }
 
 div {
