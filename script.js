@@ -188,13 +188,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     pickTemplateLink.addEventListener('click', showTemplateModal);
 
     // Page size change functionality -- not working, need to fix:
-    pageSizeDropdown.addEventListener('click', function(e) {
-        console.log('Clicked:', e.target);
-        if (e.target.classList.contains('dropdown-item')) {
-            const newSize = e.target.getAttribute('data-size');
-            changePageSize(newSize);
-        }
+    console.log("1111");
+    pageSizeDropdown.querySelectorAll('.dropdown-item').forEach(function(item) {
+        item.addEventListener('click', function(event) {
+            console.log(event.target.getAttribute('data-size'));
+            changePageSize(event.target.getAttribute('data-size'));
+        });
     });
+    console.log("2222");
 
     function changePageSize(size) {
         currentPageSize = size;
