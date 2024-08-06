@@ -1,6 +1,5 @@
 import * as html2pdf from 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
-import { html } from 'cheerio';
 
 document.addEventListener('DOMContentLoaded', async function() {
     const headerMarkdown = document.getElementById('headerMarkdown');
