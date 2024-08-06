@@ -1,5 +1,6 @@
 import * as html2pdf from 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
+import { html } from 'cheerio';
 
 document.addEventListener('DOMContentLoaded', async function() {
     const headerMarkdown = document.getElementById('headerMarkdown');
@@ -206,7 +207,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         const dimensions = getPageDimensions(size);
         htmlPreview.style.width = `${dimensions.width}px`;
         htmlPreview.style.height = `${dimensions.height}px`;
-        
+        // justify-content: center;
+        // align-items: center;
+        htmlPreview.style.justifyContent = 'center';
+        htmlPreview.style.alignItems = 'center';
+
         // Force reflow to ensure the changes take effect
         htmlPreview.offsetHeight;
         console.log('Page size:', size);
