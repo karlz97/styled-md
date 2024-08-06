@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         customCSS = await fetchTemplateCSS(template.name);
         applyCustomCSS();
         templateModal.hide();
-        // saveBtn.click(); // Trigger save to apply new CSS
+        await applyTemplate(template.name);
     }
 
     async function fetchTemplateCSS(templateName) {
@@ -142,17 +142,45 @@ document.addEventListener('DOMContentLoaded', async function() {
         styleElement.textContent = `@scope {\n${customCSS}\n}`;
     }
 
-    function applyTemplate(templateName) {
-        fetchTemplateHTML(templateName).then(html => {
-            // Parse the fetched HTML text
-            const parser = new DOMParser();
-            const templateDoc = parser.parseFromString(htmlText, 'text/html');
+    async function applyTemplate(templateName) {
+        const htmlText = await fetchTemplateHTML(templateName);
+        const parser = new DOMParser();
+        const templateDoc = parser.parseFromString(htmlText, 'text/html');
 
-            // Select all elements with class "input-field"
-            const inputFieldsNodeList = templateDoc.querySelectorAll('.input-field');
+        const inputFields = templateDoc.querySelectorAll('.input-field');
+        const editorInputFields = document.getElementById('editor-input-fields');
+        editorInputFields.innerHTML = ''; // Clear existing fields
 
-            // Convert NodeList to Array
-            const inputFieldsArray = Array.from(inputFieldsNodeList);
+        inputFields.forEach((field, index) => {
+            const name = field.getAttribute('name') || `Section ${index + 1}`;
+            const content = field.innerHTML.trim();
+
+            const section = document.createElement('div');
+            section.className = 'mb-3';
+            section.innerHTML = `
+                <h4 class="form-label">${name}</h4>
+                <textarea class="form-control" rows="5" data-field-index="${index}">${content}</textarea>
+            `;
+            editorInputFields.appendChild(section);
+        });
+
+        // Update preview with the template content
+        htmlPreviewContent.innerHTML = templateDoc.body.innerHTML;
+
+        // Add event listeners to update preview on input
+        editorInputFields.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', updatePreview);
+        });
+    }
+
+    function updatePreview() {
+        const inputFields = document.querySelectorAll('#editor-input-fields textarea');
+        const previewFields = htmlPreviewContent.querySelectorAll('.input-field');
+
+        inputFields.forEach((textarea, index) => {
+            if (previewFields[index]) {
+                previewFields[index].innerHTML = marked.parse(textarea.value);
+            }
         });
     }
 
