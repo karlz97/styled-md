@@ -10,6 +10,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
     "puppeteer": "^22.15.0",
-    "sharp": "^0.33.4"
+    "sharp": "^0.33.4",
+    "marked": "^5.0.2"
   }
 }
