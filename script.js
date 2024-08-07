@@ -1,5 +1,6 @@
 import * as html2pdf from 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
+// import { html } from 'cheerio';
 
 document.addEventListener('DOMContentLoaded', async function() {
     const headerMarkdown = document.getElementById('headerMarkdown');
@@ -13,15 +14,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     htmlPreview.innerHTML = `
         <div id="htmlPreviewContent">
-            <header class="input-field invitation-header">
-                <h1>John Doe123</h1>
-                <h2>123-456-7890</h2>
-                <h3>Location: New York, NY</h3>
-                <h3><a href="https://linkedin.com/in/johndoe">LinkedIn</a></h3>
-            </header>
-            <main class="input-field invitation-main">
-                <p>Hi, I'm John Doe. I'm a software developer with 5 years of experience...</p>
-            </main>
+            <div class="page-body">
+                <header class="input-field invitation-header">
+                    <h1>John Doe123</h1>
+                    <h2>123-456-7890</h2>
+                    <h3>Location: New York, NY</h3>
+                    <h3><a href="https://linkedin.com/in/johndoe">LinkedIn</a></h3>
+                </header>
+                <main class="input-field invitation-main">
+                    <p>Hi, I'm John Doe. I'm a software developer with 5 years of experience...</p>
+                </main>
+            </div>
         </div>`;
     const htmlPreviewContent = htmlPreview.getElementById('htmlPreviewContent');    //const htmlPreviewContent = document.getElementById('htmlPreviewContent');
     
@@ -233,25 +236,28 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 
     function changePageSize(size) {
+        const pageBody = htmlPreview.querySelector('.page-body');
         currentPageSize = size;
-        previewCanvas.className = ''; // Remove all classes
-        previewCanvas.classList.add(`page-size-${size}`);
-        
+        pageBody.className = ''; // Remove all classes
+        pageBody.classList.add(`page-body`);
+        pageBody.classList.add(`page-size-${size}`);
+        pageBody.style.add(`flex`);
+
         // Update the preview container's dimensions
         const dimensions = getPageDimensions(size);
-        previewCanvas.style.width = `${dimensions.width}px`;
-        previewCanvas.style.height = `${dimensions.height}px`;
+        pageBody.style.width = `${dimensions.width}px`;
+        pageBody.style.height = `${dimensions.height}px`;
 
-        // Ensure the parent element is relatively positioned
-        previewCanvas.parentElement.style.position = 'relative';
+        // // Ensure the parent element is relatively positioned
+        // pageBody.parentElement.style.position = 'relative';
 
-        // Align to the top left of the parent element
-        previewCanvas.style.position = 'absolute';
-        previewCanvas.style.top = '0';
-        previewCanvas.style.left = '0';
+        // // Align to the top left of the parent element
+        // pageBody.style.position = 'absolute';
+        // pageBody.style.top = '0';
+        // pageBody.style.left = '0';
 
         // Force reflow to ensure the changes take effect
-        previewCanvas.offsetHeight;
+        pageBody.offsetHeight;
         console.log('Page size:', size);
     }
 
@@ -290,7 +296,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     
     function updateScale() {
-        previewCanvas.style.transform = `scale(${scale})`;
+        const pageBody = htmlPreview.querySelector('.page-body');
+        pageBody.style.transform = `scale(${scale})`;
+        // previewCanvas.style.transform = `scale(${scale})`;
+        pageBody.style.transformOrigin = 'top left'; // Ensure it scales from the top left corner
+        // previewCanvas.style.transformOrigin = 'top left'; // Ensure it scales from the top left corner
         console.log('Scale:', scale);
     }
 });
