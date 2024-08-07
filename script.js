@@ -206,6 +206,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
         toggleFlex();
         toggleMargin();
+        toggleStretch();
         updatePageSize(currentPageSize);
     }
 
@@ -293,6 +294,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const zoomOutBtn = document.getElementById('zoomOutBtn');
     const flexCheckbox = document.getElementById('flexCheckbox');
     const marginCheckbox = document.getElementById('marginCheckbox');
+    const stretchCheckbox = document.getElementById('stretchCheckbox');
     const resetBtn = document.getElementById('resetBtn');
     
     if (zoomInBtn && zoomOutBtn) {
@@ -308,11 +310,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         marginCheckbox.addEventListener('change', toggleMargin);
     }
 
+    if (stretchCheckbox) {
+        stretchCheckbox.addEventListener('change', toggleStretch);
+    }
+
     if (resetBtn) {
         resetBtn.addEventListener('click', resetTemplate);
     }
 
     let originalMargins = {};
+    let originalAlignSelf = {};
     
     function zoomOut() {
         scale += 0.1;
@@ -370,15 +377,31 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
+    function toggleStretch() {
+        const pageBody = htmlPreview.querySelector('.page-body');
+        const directChildren = pageBody.children;
+
+        for (let child of directChildren) {
+            if (stretchCheckbox.checked) {
+                originalAlignSelf[child.tagName] = child.style.alignSelf;
+                child.style.alignSelf = 'stretch';
+            } else {
+                child.style.alignSelf = originalAlignSelf[child.tagName] || '';
+            }
+        }
+    }
+
     function resetTemplate() {
         if (originalTemplateHTML) {
             htmlPreviewContent.innerHTML = originalTemplateHTML;
             applyCustomCSS();
             updatePreview();
         
-            // Reset margin checkbox and original margins
+            // Reset checkboxes and original values
             marginCheckbox.checked = true;
+            stretchCheckbox.checked = false;
             originalMargins = {};
+            originalAlignSelf = {};
         }
     }
 });
