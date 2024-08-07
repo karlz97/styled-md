@@ -293,26 +293,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     const stretchCheckbox = document.getElementById('stretchCheckbox');
     const resetBtn = document.getElementById('resetBtn');
     
-    if (zoomInBtn && zoomOutBtn) {
-        zoomInBtn.addEventListener('click', zoomIn);
-        zoomOutBtn.addEventListener('click', zoomOut);
-    }
-
-    if (flexCheckbox) {
-        flexCheckbox.addEventListener('change', toggleFlex);
-    }
-
-    if (borderCheckbox) {
-        borderCheckbox.addEventListener('change', toggleBorder);
-    }
-
-    if (stretchCheckbox) {
-        stretchCheckbox.addEventListener('change', toggleStretch);
-    }
-
-    if (resetBtn) {
-        resetBtn.addEventListener('click', resetTemplate);
-    }
+    zoomInBtn.addEventListener('click', zoomIn);
+    zoomOutBtn.addEventListener('click', zoomOut);
+    flexCheckbox.addEventListener('change', toggleFlex);
+    borderCheckbox.addEventListener('change', toggleBorder);
+    stretchCheckbox.addEventListener('change', toggleStretch);
+    resetBtn.addEventListener('click', resetTemplate);
 
     let originalBorder = {};
     let originalAlignSelf = {};
