@@ -204,7 +204,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 previewFields[index].innerHTML = marked.parse(textarea.value);
             }
         });
-        toggleFlex()
+        toggleFlex();
+        toggleMargin();
         updatePageSize(currentPageSize);
     }
 
@@ -291,7 +292,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const zoomInBtn = document.getElementById('zoomInBtn');
     const zoomOutBtn = document.getElementById('zoomOutBtn');
     const flexCheckbox = document.getElementById('flexCheckbox');
-    const removeMarginBtn = document.getElementById('removeMarginBtn');
+    const marginCheckbox = document.getElementById('marginCheckbox');
     const resetBtn = document.getElementById('resetBtn');
     
     if (zoomInBtn && zoomOutBtn) {
@@ -303,13 +304,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         flexCheckbox.addEventListener('change', toggleFlex);
     }
 
-    if (removeMarginBtn) {
-        removeMarginBtn.addEventListener('click', removeMargin);
+    if (marginCheckbox) {
+        marginCheckbox.addEventListener('change', toggleMargin);
     }
 
     if (resetBtn) {
         resetBtn.addEventListener('click', resetTemplate);
     }
+
+    let originalMargins = {};
     
     function zoomOut() {
         scale += 0.1;
@@ -346,12 +349,24 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     let originalTemplateHTML = '';
 
-    function removeMargin() {
+    function toggleMargin() {
         const pageBody = htmlPreview.querySelector('.page-body');
         const directChildren = pageBody.children;
-    
-        for (let child of directChildren) {
-            child.style.margin = '0';
+
+        if (marginCheckbox.checked) {
+            // Apply original margins
+            for (let child of directChildren) {
+                if (originalMargins[child.tagName]) {
+                    child.style.margin = originalMargins[child.tagName];
+                }
+            }
+        } else {
+            // Remove margins and store original values
+            for (let child of directChildren) {
+                const computedStyle = window.getComputedStyle(child);
+                originalMargins[child.tagName] = computedStyle.margin;
+                child.style.margin = '0';
+            }
         }
     }
 
@@ -360,6 +375,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             htmlPreviewContent.innerHTML = originalTemplateHTML;
             applyCustomCSS();
             updatePreview();
+        
+            // Reset margin checkbox and original margins
+            marginCheckbox.checked = true;
+            originalMargins = {};
         }
     }
 });
