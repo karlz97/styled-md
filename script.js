@@ -205,6 +205,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         });
         toggleFlex()
+        updatePageSize(currentPageSize);
     }
 
     saveBtn.addEventListener('click', function() {
@@ -243,11 +244,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     pageSizeDropdown.querySelectorAll('.dropdown-item').forEach(function(item) {
         item.addEventListener('click', function(event) {
             console.log(event.target.getAttribute('data-size'));
-            changePageSize(event.target.getAttribute('data-size'));
+            // updatePageSize(event.target.getAttribute('data-size'));
+            currentPageSize = event.target.getAttribute('data-size');
+            updatePreview();
         });
     });
 
-    function changePageSize(size) {
+    function updatePageSize(size) {
         const pageBody = htmlPreview.querySelector('.page-body');
         currentPageSize = size;
         pageBody.className = ''; // Remove all classes
