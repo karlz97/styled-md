@@ -183,8 +183,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             editorInputFields.appendChild(section);
         });
 
+        // Store the original template HTML
+        originalTemplateHTML = templateDoc.body.innerHTML;
+
         // Update preview with the template content
-        htmlPreviewContent.innerHTML = templateDoc.body.innerHTML;
+        htmlPreviewContent.innerHTML = originalTemplateHTML;
 
         // Add event listeners to update preview on input
         editorInputFields.querySelectorAll('textarea').forEach(textarea => {
@@ -285,6 +288,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     const zoomInBtn = document.getElementById('zoomInBtn');
     const zoomOutBtn = document.getElementById('zoomOutBtn');
     const flexCheckbox = document.getElementById('flexCheckbox');
+    const removeMarginBtn = document.getElementById('removeMarginBtn');
+    const resetBtn = document.getElementById('resetBtn');
     
     if (zoomInBtn && zoomOutBtn) {
         zoomInBtn.addEventListener('click', zoomIn);
@@ -293,6 +298,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     if (flexCheckbox) {
         flexCheckbox.addEventListener('change', toggleFlex);
+    }
+
+    if (removeMarginBtn) {
+        removeMarginBtn.addEventListener('click', removeMargin);
+    }
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', resetTemplate);
     }
     
     function zoomOut() {
@@ -328,12 +341,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
+    let originalTemplateHTML = '';
+
     function removeMargin() {
         const pageBody = htmlPreview.querySelector('.page-body');
         const directChildren = pageBody.children;
-        
+    
         for (let child of directChildren) {
             child.style.margin = '0';
+        }
+    }
+
+    function resetTemplate() {
+        if (originalTemplateHTML) {
+            htmlPreviewContent.innerHTML = originalTemplateHTML;
+            applyCustomCSS();
+            updatePreview();
         }
     }
 });
