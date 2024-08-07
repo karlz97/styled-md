@@ -147,7 +147,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             styleElement = document.createElement('style');
             htmlPreview.prepend(styleElement);
         }
-        styleElement.textContent = customCSS;
+        styleElement.textContent = `
+            #page-body {
+                background-image: 
+                    linear-gradient(45deg, rgba(0, 0, 0, 0.25) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.25) 75%, rgba(0, 0, 0, 0.25)),
+                    linear-gradient(135deg, rgba(0, 0, 0, 0.25) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.25) 75%, rgba(0, 0, 0, 0.25));
+                background-size: 20px 20px;
+                background-position: 0 0, 10px 10px;
+            }
+            ${customCSS}`;
         //styleElement.textContent = `@scope {\n${customCSS}\n}`;
     }
 
@@ -193,6 +201,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 previewFields[index].innerHTML = marked.parse(textarea.value);
             }
         });
+        toggleFlex()
     }
 
     saveBtn.addEventListener('click', function() {
@@ -241,20 +250,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         pageBody.className = ''; // Remove all classes
         pageBody.classList.add(`page-body`);
         pageBody.classList.add(`page-size-${size}`);
-        pageBody.style.add(`flex`);
+        pageBody.style.display = `flex`;
+
+        // TODO need to seperate this code into a function
+        // pageBody.style.backgroundColor = '#98c3f0';
+
 
         // Update the preview container's dimensions
         const dimensions = getPageDimensions(size);
         pageBody.style.width = `${dimensions.width}px`;
         pageBody.style.height = `${dimensions.height}px`;
 
-        // // Ensure the parent element is relatively positioned
-        // pageBody.parentElement.style.position = 'relative';
 
-        // // Align to the top left of the parent element
-        // pageBody.style.position = 'absolute';
-        // pageBody.style.top = '0';
-        // pageBody.style.left = '0';
 
         // Force reflow to ensure the changes take effect
         pageBody.offsetHeight;
@@ -307,6 +314,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.log('Scale:', scale);
     }
 
+
     function toggleFlex() {
         const pageBody = htmlPreview.querySelector('.page-body');
         const directChildren = pageBody.children;
@@ -317,6 +325,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             } else {
                 child.style.flex = '';
             }
+        }
+    }
+
+    function removeMargin() {
+        const pageBody = htmlPreview.querySelector('.page-body');
+        const directChildren = pageBody.children;
+        
+        for (let child of directChildren) {
+            child.style.margin = '0';
         }
     }
 });
