@@ -3,11 +3,8 @@ import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
 // import { html } from 'cheerio';
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const headerMarkdown = document.getElementById('headerMarkdown');
-    const contentMarkdown = document.getElementById('contentMarkdown');
-    const saveBtn = document.getElementById('saveBtn');
-    const exportBtn = document.getElementById('exportBtn');
-    const previewContainer = document.getElementById('previewContainer');
+
+
     const previewCanvas = document.getElementById('previewCanvas');
 
     const htmlPreview = previewCanvas.attachShadow({mode: 'open'});     // const htmlPreview = document.getElementById('htmlPreview');
@@ -28,10 +25,19 @@ document.addEventListener('DOMContentLoaded', async function() {
         </div>`;
     const htmlPreviewContent = htmlPreview.getElementById('htmlPreviewContent');    //const htmlPreviewContent = document.getElementById('htmlPreviewContent');
     
-    const documentTitle = document.getElementById('documentTitle');
+    //buttons in the navbar
     const pickTemplateLink = document.getElementById('pickTemplateLink');
     const modalContainer = document.getElementById('modalContainer');
-    const htmlPreviewContainer = document.getElementById('previewContainer');
+
+    //buttons in the left panel editor
+    const documentTitle = document.getElementById('documentTitle');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const saveMdBtn = document.getElementById('saveMdBtn');
+    const exportPdfBtn = document.getElementById('exportPdfBtn');
+    const exportPngBtn = document.getElementById('exportPngBtn');
+
+
+    //buttons in the right panel toolbar
     const pageSizeDropdown = document.getElementById('pageSizeDropdown');
 
 
@@ -148,12 +154,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             htmlPreview.prepend(styleElement);
         }
         styleElement.textContent = `
-            #page-body {
+            .page-body {
                 background-image: 
                     linear-gradient(45deg, rgba(0, 0, 0, 0.25) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.25) 75%, rgba(0, 0, 0, 0.25)),
                     linear-gradient(135deg, rgba(0, 0, 0, 0.25) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.25) 75%, rgba(0, 0, 0, 0.25));
                 background-size: 20px 20px;
                 background-position: 0 0, 10px 10px;
+                box-shadow: 0 0 25px rgba(0,0,0,0.4)
             }
             ${customCSS}`;
         //styleElement.textContent = `@scope {\n${customCSS}\n}`;
@@ -205,40 +212,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         });
         toggleFlex();
-        toggleMargin();
+        toggleBorder();
         toggleStretch();
         updatePageSize(currentPageSize);
     }
 
-    saveBtn.addEventListener('click', function() {
+    refreshBtn.addEventListener('click', function() {    //TODO
         applyCustomCSS();
         console.log('Custom CSS applied');
         updatePreview();
         console.log('Preview updated..');
     });
-
-    // exportBtn.addEventListener('click', function() {
-    //     const generatedHtml = convertMarkdownToHtml();
-    //     const element = document.createElement('div');
-    //     element.innerHTML = generatedHtml;
-        
-    //     const filename = documentTitle.value || 'exported_document';
-        
-    //     const opt = {
-    //         margin:       10,
-    //         filename:     `${filename}.pdf`,
-    //         image:        { type: 'jpeg', quality: 0.98 },
-    //         html2canvas:  { scale: 2 },
-    //         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    //     };
-
-    //     // Apply custom CSS to the element before generating PDF
-    //     const styleElement = document.createElement('style');
-    //     styleElement.textContent = customCSS;
-    //     element.appendChild(styleElement);
-
-    //     html2pdf().set(opt).from(element).save();
-    // });
 
     pickTemplateLink.addEventListener('click', showTemplateModal);
 
@@ -260,16 +244,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         pageBody.classList.add(`page-size-${size}`);
         pageBody.style.display = `flex`;
 
-        // TODO need to seperate this code into a function
-        // pageBody.style.backgroundColor = '#98c3f0';
-
-
         // Update the preview container's dimensions
         const dimensions = getPageDimensions(size);
         pageBody.style.width = `${dimensions.width}px`;
         pageBody.style.height = `${dimensions.height}px`;
-
-
 
         // Force reflow to ensure the changes take effect
         pageBody.offsetHeight;
@@ -293,7 +271,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const zoomInBtn = document.getElementById('zoomInBtn');
     const zoomOutBtn = document.getElementById('zoomOutBtn');
     const flexCheckbox = document.getElementById('flexCheckbox');
-    const marginCheckbox = document.getElementById('marginCheckbox');
+    const borderCheckbox = document.getElementById('borderCheckbox');
     const stretchCheckbox = document.getElementById('stretchCheckbox');
     const resetBtn = document.getElementById('resetBtn');
     
@@ -306,8 +284,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         flexCheckbox.addEventListener('change', toggleFlex);
     }
 
-    if (marginCheckbox) {
-        marginCheckbox.addEventListener('change', toggleMargin);
+    if (borderCheckbox) {
+        borderCheckbox.addEventListener('change', toggleBorder);
     }
 
     if (stretchCheckbox) {
@@ -318,7 +296,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         resetBtn.addEventListener('click', resetTemplate);
     }
 
-    let originalMargins = {};
+    let originalBorder = {};
     let originalAlignSelf = {};
     
     function zoomOut() {
@@ -356,23 +334,23 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     let originalTemplateHTML = '';
 
-    function toggleMargin() {
+    function toggleBorder() {
         const pageBody = htmlPreview.querySelector('.page-body');
         const directChildren = pageBody.children;
 
-        if (marginCheckbox.checked) {
-            // Apply original margins
+        if (borderCheckbox.checked) {
+            // Apply original borders
             for (let child of directChildren) {
-                if (originalMargins[child.tagName]) {
-                    child.style.margin = originalMargins[child.tagName];
+                if (originalBorder[child.tagName]) {
+                    child.style.border = originalBorder[child.tagName];
                 }
             }
         } else {
-            // Remove margins and store original values
+            // Remove borders and store original values
             for (let child of directChildren) {
                 const computedStyle = window.getComputedStyle(child);
-                originalMargins[child.tagName] = computedStyle.margin;
-                child.style.margin = '0';
+                originalBorder[child.tagName] = computedStyle.border;
+                child.style.border = '0';
             }
         }
     }
@@ -398,9 +376,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             updatePreview();
         
             // Reset checkboxes and original values
-            marginCheckbox.checked = true;
+            borderCheckbox.checked = true;
             stretchCheckbox.checked = false;
-            originalMargins = {};
+            originalBorder = {};
             originalAlignSelf = {};
         }
     }
