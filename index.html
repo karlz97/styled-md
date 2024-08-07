@@ -49,20 +49,22 @@
         <div class="row">
             <div id="editorPanel" class="col-md-6 p-4">
                 <div class="mb-3">
-                    
                     <div class="input-group">
                         <input type="text" id="documentTitle" class="form-control  no-border" placeholder="Document Title">
-                        <button id="pickTemplate" class="btn btn-light">
-                            <i class="fa-solid fa-arrow-right fa-xl" style="color: #B197FC;"></i>
+                        <button id="refreshBtn" class="btn btn-light">
+                            <i class="fa-solid fa-arrows-rotate" style="color: #B197FC;"></i>
                         </button>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <button id="saveBtn" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Save 
-                    </button>
-                    <button id="exportBtn" class="btn btn-success">
-                        <i class="fas fa-file-export"></i> Export
+                    <button id="saveMdBtn" class="btn btn-primary">
+                        Save <i class="fa-brands fa-markdown"></i>
+                    </button> &nbsp
+                    <button id="exportPdfBtn" class="btn btn-success">
+                         Export <i class="fa-regular fa-file-pdf"></i>
+                    </button> &nbsp
+                    <button id="exportPngBtn" class="btn btn-success">
+                        Export <i class="fa-regular fa-file-image"></i>
                     </button>
                 </div>
                 <div class="card mb-3">
@@ -114,9 +116,9 @@
                             </ul>
                         </div>
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="checkbox" id="marginCheckbox" checked>
-                            <label class="form-check-label" for="marginCheckbox">
-                                Margin
+                            <input class="form-check-input" type="checkbox" id="borderCheckbox" checked>
+                            <label class="form-check-label" for="borderCheckbox">
+                                Border
                             </label>
                         </div>
                         <div class="form-check me-3">
