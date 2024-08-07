@@ -277,10 +277,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     let scale = 1;
     const zoomInBtn = document.getElementById('zoomInBtn');
     const zoomOutBtn = document.getElementById('zoomOutBtn');
+    const flexCheckbox = document.getElementById('flexCheckbox');
     
     if (zoomInBtn && zoomOutBtn) {
         zoomInBtn.addEventListener('click', zoomIn);
         zoomOutBtn.addEventListener('click', zoomOut);
+    }
+
+    if (flexCheckbox) {
+        flexCheckbox.addEventListener('change', toggleFlex);
     }
     
     function zoomOut() {
@@ -298,9 +303,20 @@ document.addEventListener('DOMContentLoaded', async function() {
     function updateScale() {
         const pageBody = htmlPreview.querySelector('.page-body');
         pageBody.style.transform = `scale(${scale})`;
-        // previewCanvas.style.transform = `scale(${scale})`;
         pageBody.style.transformOrigin = 'top left'; // Ensure it scales from the top left corner
-        // previewCanvas.style.transformOrigin = 'top left'; // Ensure it scales from the top left corner
         console.log('Scale:', scale);
+    }
+
+    function toggleFlex() {
+        const pageBody = htmlPreview.querySelector('.page-body');
+        const directChildren = pageBody.children;
+        
+        for (let child of directChildren) {
+            if (flexCheckbox.checked) {
+                child.style.flex = '1';
+            } else {
+                child.style.flex = '';
+            }
+        }
     }
 });
