@@ -40,6 +40,22 @@ document.addEventListener('DOMContentLoaded', async function() {
     //buttons in the right panel toolbar
     const pageSizeDropdown = document.getElementById('pageSizeDropdown');
 
+    // Function to export PDF
+    async function exportPDF() {
+        const pageBody = htmlPreview.querySelector('.page-body');
+        const dimensions = getPageDimensions(currentPageSize);
+        
+        const opt = {
+            margin: 0,
+            filename: `${documentTitle.value || 'document'}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'pt', format: [dimensions.width, dimensions.height], orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(pageBody).save();
+    }
+
 
     let templateModal;
     let templateGrid;
@@ -225,6 +241,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 
     pickTemplateLink.addEventListener('click', showTemplateModal);
+
+    exportPdfBtn.addEventListener('click', exportPDF);
 
     // Page size change functionality -- not working, need to fix:
     pageSizeDropdown.querySelectorAll('.dropdown-item').forEach(function(item) {
