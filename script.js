@@ -127,12 +127,14 @@ async function exportPNG() {
     tempContainer.style.position = 'absolute';
     tempContainer.style.left = '-9999px';
     tempContainer.style.top = '-9999px';
+    
     document.body.appendChild(tempContainer);
 
     // Clone the page-body and its styles
     const clonedPageBody = pageBody.cloneNode(true);
     clonedPageBody.style.width = `${dimensions.width}px`;
     clonedPageBody.style.height = `${dimensions.height}px`;
+    updateScale(clonedPageBody,1)
     tempContainer.appendChild(clonedPageBody);
 
     // Apply custom CSS
@@ -397,6 +399,7 @@ async function exportPNG() {
                 return { width: 8.27 * dpi, height: 11.7 * dpi }; // Default to A4
         }
     }
+
     let scale = 1;
     const zoomInBtn = document.getElementById('zoomInBtn');
     const zoomOutBtn = document.getElementById('zoomOutBtn');
@@ -416,24 +419,24 @@ async function exportPNG() {
     let originalAlignSelf = {};
     
     function zoomOut() {
+        const pageBody = htmlPreview.querySelector('.page-body');
         scale += 0.1;
-        updateScale();
+        updateScale(pageBody, scale);
     }
     
     function zoomIn() {
+        const pageBody = htmlPreview.querySelector('.page-body');
         if (scale > 0.1) {
             scale -= 0.1;
-            updateScale();
+            updateScale(pageBody, scale);
         }
     }
     
-    function updateScale() {
-        const pageBody = htmlPreview.querySelector('.page-body');
-        pageBody.style.transform = `scale(${scale})`;
-        pageBody.style.transformOrigin = 'top left'; // Ensure it scales from the top left corner
-        console.log('Scale:', scale);
+    function updateScale(p, s) { 
+        p.style.transform = `scale(${s})`;
+        p.style.transformOrigin = 'top left'; // Ensure it scales from the top left corner
+        console.log('Scale:', s);
     }
-
 
     function toggleFlex() {
         const pageBody = htmlPreview.querySelector('.page-body');
