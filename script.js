@@ -41,19 +41,56 @@ document.addEventListener('DOMContentLoaded', async function() {
     const pageSizeDropdown = document.getElementById('pageSizeDropdown');
 
     // Function to export PDF
-    async function exportPDF() {
+    function exportPDF() {
         const pageBody = htmlPreview.querySelector('.page-body');
         const dimensions = getPageDimensions(currentPageSize);
         
-        const opt = {
-            margin: 0,
-            filename: `${documentTitle.value || 'document'}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'pt', format: [dimensions.width, dimensions.height], orientation: 'portrait' }
-        };
-
-        html2pdf().set(opt).from(pageBody).save();
+        // Clone the page-body element
+        const clonedPageBody = pageBody.cloneNode(true);
+        
+        // Create a new window
+        const printWindow = window.open('', '_blank');
+        
+        // Write the HTML content to the new window
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>${documentTitle.value || 'Document'}</title>
+                <style>
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
+                    }
+                    .page-body {
+                        width: ${dimensions.width}px;
+                        height: ${dimensions.height}px;
+                        margin: auto;
+                        box-shadow: none;
+                        background-image: none;
+                    }
+                    ${customCSS}
+                </style>
+            </head>
+            <body>
+                ${clonedPageBody.outerHTML}
+                <script>
+                    window.onload = function() {
+                        window.print();
+                        window.onafterprint = function() {
+                            window.close();
+                        }
+                    }
+                </script>
+            </body>
+            </html>
+        `);
+        
+        printWindow.document.close();
     }
 
 
