@@ -44,13 +44,16 @@ document.addEventListener('DOMContentLoaded', async function() {
     async function exportPDF() {
         const pageBody = htmlPreview.querySelector('.page-body');
         const dimensions = getPageDimensions(currentPageSize);
-        
+    
         // Clone the page-body element
         const clonedPageBody = pageBody.cloneNode(true);
-        
+    
+        // Clear page size settings
+        clearPageSize(clonedPageBody);
+    
         // Create a new window
         const printWindow = window.open('', '_blank');
-        
+    
         // Write the HTML content to the new window
         printWindow.document.write(`
             <!DOCTYPE html>
@@ -70,8 +73,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         margin: auto;
                         box-shadow: none;
                         background-image: none;
-                        width: auto;
-                        height: auto;
                     }
                 </style>
             </head>
@@ -88,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             </body>
             </html>
         `);
-        
+    
         // printWindow.document.close();
     }
 
@@ -307,6 +308,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Force reflow to ensure the changes take effect
         pageBody.offsetHeight;
         console.log('Page size:', size);
+    }
+
+    function clearPageSize(pageBody) {
+        pageBody.style.width = '';
+        pageBody.style.height = '';
+        pageBody.className = 'page-body';
     }
 
     function getPageDimensions(size) {
