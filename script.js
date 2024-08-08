@@ -92,6 +92,52 @@ document.addEventListener('DOMContentLoaded', async function() {
         // printWindow.document.close();
     }
 
+    async function exportPNG() {
+        const pageBody = htmlPreview.querySelector('.page-body');
+        const dimensions = getPageDimensions(currentPageSize);
+    
+        // Create a temporary container to render the page-body
+        const tempContainer = document.createElement('div');
+        tempContainer.style.position = 'absolute';
+        tempContainer.style.left = '-9999px';
+        tempContainer.style.top = '-9999px';
+        document.body.appendChild(tempContainer);
+    
+        // Clone the page-body and its styles
+        const clonedPageBody = pageBody.cloneNode(true);
+        clonedPageBody.style.width = `${dimensions.width}px`;
+        clonedPageBody.style.height = `${dimensions.height}px`;
+        tempContainer.appendChild(clonedPageBody);
+    
+        // Apply custom CSS
+        const styleElement = document.createElement('style');
+        styleElement.textContent = customCSS;
+        tempContainer.appendChild(styleElement);
+    
+        try {
+            // Use html2canvas to capture the page-body
+            const canvas = await html2canvas(clonedPageBody, {
+                width: dimensions.width,
+                height: dimensions.height,
+                scale: 2, // Increase scale for higher quality
+                useCORS: true,
+                logging: false,
+            });
+    
+            // Convert canvas to PNG and download
+            const pngData = canvas.toDataURL('image/png');
+            const downloadLink = document.createElement('a');
+            downloadLink.href = pngData;
+            downloadLink.download = `${documentTitle.value || 'document'}.png`;
+            downloadLink.click();
+        } catch (error) {
+            console.error('Error exporting PNG:', error);
+        } finally {
+            // Clean up
+            document.body.removeChild(tempContainer);
+        }
+    }
+
 
     let templateModal;
     let templateGrid;
@@ -280,6 +326,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     pickTemplateLink.addEventListener('click', showTemplateModal);
 
     exportPdfBtn.addEventListener('click', exportPDF);
+    exportPngBtn.addEventListener('click', exportPNG);
 
     // Page size change functionality -- not working, need to fix:
     pageSizeDropdown.querySelectorAll('.dropdown-item').forEach(function(item) {
