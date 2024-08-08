@@ -40,104 +40,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     //buttons in the right panel toolbar
     const pageSizeDropdown = document.getElementById('pageSizeDropdown');
 
-    // Function to export PDF
-    async function exportPDF() {
-        const pageBody = htmlPreview.querySelector('.page-body');
-    
-        // Clone the page-body element
-        const clonedPageBody = pageBody.cloneNode(true);
-    
-        // Clear page size settings
-        clearPageSize(clonedPageBody);
-    
-        // Create a new window
-        const printWindow = window.open('', '_blank');
-    
-        // Write the HTML content to the new window
-        printWindow.document.write(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>${documentTitle.value || 'Document'}</title>
-                <style>
-                    ${customCSS}
-                    body {
-                        margin: 0;
-                        padding: 0;
-                        justify-content: center;
-                        align-items: center;
-                        min-height: 100vh;
-                    }
-                    .page-body {
-                        margin: auto;
-                        box-shadow: none;
-                        background-image: none;
-                    }
-                </style>
-            </head>
-            <body>
-                ${clonedPageBody.outerHTML}
-                <script>
-                    window.onload = function() {
-                        window.print();
-                        window.onafterprint = function() {
-                            window.close();
-                        }
-                    }
-                </script>
-            </body>
-            </html>
-        `);
-    
-        // printWindow.document.close();
-    }
-
-    async function exportPNG() {
-        const pageBody = htmlPreview.querySelector('.page-body');
-        const dimensions = getPageDimensions(currentPageSize);
-    
-        // Create a temporary container to render the page-body
-        const tempContainer = document.createElement('div');
-        tempContainer.style.position = 'absolute';
-        tempContainer.style.left = '-9999px';
-        tempContainer.style.top = '-9999px';
-        document.body.appendChild(tempContainer);
-    
-        // Clone the page-body and its styles
-        const clonedPageBody = pageBody.cloneNode(true);
-        clonedPageBody.style.width = `${dimensions.width}px`;
-        clonedPageBody.style.height = `${dimensions.height}px`;
-        tempContainer.appendChild(clonedPageBody);
-    
-        // Apply custom CSS
-        const styleElement = document.createElement('style');
-        styleElement.textContent = customCSS;
-        tempContainer.appendChild(styleElement);
-    
-        try {
-            // Use html2canvas to capture the page-body
-            const canvas = await html2canvas(clonedPageBody, {
-                width: dimensions.width,
-                height: dimensions.height,
-                scale: 2, // Increase scale for higher quality
-                useCORS: true,
-                logging: false,
-            });
-    
-            // Convert canvas to PNG and download
-            const pngData = canvas.toDataURL('image/png');
-            const downloadLink = document.createElement('a');
-            downloadLink.href = pngData;
-            downloadLink.download = `${documentTitle.value || 'document'}.png`;
-            downloadLink.click();
-        } catch (error) {
-            console.error('Error exporting PNG:', error);
-        } finally {
-            // Clean up
-            document.body.removeChild(tempContainer);
-        }
-    }
-
 
     let templateModal;
     let templateGrid;
@@ -164,7 +66,103 @@ document.addEventListener('DOMContentLoaded', async function() {
     templates = templatesData.templates;
     allTags = templatesData.allTags;
 
+// Function to export PDF
+async function exportPDF() {
+    const pageBody = htmlPreview.querySelector('.page-body');
 
+    // Clone the page-body element
+    const clonedPageBody = pageBody.cloneNode(true);
+
+    // Clear page size settings
+    clearPageSize(clonedPageBody);
+
+    // Create a new window
+    const printWindow = window.open('', '_blank');
+
+    // Write the HTML content to the new window
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>${documentTitle.value || 'Document'}</title>
+            <style>
+                ${customCSS}
+                body {
+                    margin: 0;
+                    padding: 0;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                }
+                .page-body {
+                    margin: auto;
+                    box-shadow: none;
+                    background-image: none;
+                }
+            </style>
+        </head>
+        <body>
+            ${clonedPageBody.outerHTML}
+            <script>
+                window.onload = function() {
+                    window.print();
+                    window.onafterprint = function() {
+                        window.close();
+                    }
+                }
+            </script>
+        </body>
+        </html>
+    `);
+
+    // printWindow.document.close();
+}
+
+async function exportPNG() {
+    const pageBody = htmlPreview.querySelector('.page-body');
+    const dimensions = getPageDimensions(currentPageSize);
+
+    // Create a temporary container to render the page-body
+    const tempContainer = document.createElement('div');
+    tempContainer.style.position = 'absolute';
+    tempContainer.style.left = '-9999px';
+    tempContainer.style.top = '-9999px';
+    document.body.appendChild(tempContainer);
+
+    // Clone the page-body and its styles
+    const clonedPageBody = pageBody.cloneNode(true);
+    clonedPageBody.style.width = `${dimensions.width}px`;
+    clonedPageBody.style.height = `${dimensions.height}px`;
+    tempContainer.appendChild(clonedPageBody);
+
+    // Apply custom CSS
+    const styleElement = document.createElement('style');
+    styleElement.textContent = customCSS;
+    tempContainer.appendChild(styleElement);
+
+    try {
+        // Use html2canvas to capture the page-body
+        const canvas = await html2canvas(tempContainer, {
+            width: dimensions.width,
+            height: dimensions.height,
+            scale: 4, // Increase scale for higher quality
+            useCORS: true,
+            logging: false,
+        });
+
+        // Convert canvas to PNG and download
+        const pngData = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngData;
+        downloadLink.download = `${documentTitle.value || 'document'}.png`;
+        downloadLink.click();
+    } catch (error) {
+        console.error('Error exporting PNG:', error);
+    } finally {
+        // Clean up
+        document.body.removeChild(tempContainer);
+    }
+}
     function showTemplateModal() {
         renderTagFilter();
         renderTemplateGrid();
