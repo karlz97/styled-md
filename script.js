@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const pageSizeDropdown = document.getElementById('pageSizeDropdown');
 
     // Function to export PDF
-    function exportPDF() {
+    async function exportPDF() {
         const pageBody = htmlPreview.querySelector('.page-body');
         const dimensions = getPageDimensions(currentPageSize);
         
@@ -58,22 +58,21 @@ document.addEventListener('DOMContentLoaded', async function() {
             <head>
                 <title>${documentTitle.value || 'Document'}</title>
                 <style>
+                    ${customCSS}
                     body {
                         margin: 0;
                         padding: 0;
-                        display: flex;
                         justify-content: center;
                         align-items: center;
                         min-height: 100vh;
                     }
                     .page-body {
-                        width: ${dimensions.width}px;
-                        height: ${dimensions.height}px;
                         margin: auto;
                         box-shadow: none;
                         background-image: none;
+                        width: auto;
+                        height: auto;
                     }
-                    ${customCSS}
                 </style>
             </head>
             <body>
@@ -90,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             </html>
         `);
         
-        printWindow.document.close();
+        // printWindow.document.close();
     }
 
 
@@ -102,6 +101,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let templates = [];
     let allTags = [];
     let selectedTags = new Set();
+    let template
 
     // Load the modal HTML
     const modalResponse = await fetch('template-market.html');
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     async function selectTemplate(index) {
-        const template = templates[index];
+        template = templates[index];
         customCSS = await fetchTemplateCSS(template.name);
         applyCustomCSS();
         templateModal.hide();
