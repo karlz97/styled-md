@@ -11,16 +11,16 @@
     <meta name="template-instruction" content="Use '# Your Name' for the main title. Use regular paragraphs for address and date. Use '## Dear [Recipient],' for salutation. Main content should be in regular paragraphs. Use '**bold**' for emphasis and '*italic*' for subtle emphasis. Use '### Sincerely,' for the closing." />
     <title>Concise Letter II</title>
     <style>
-        body {
+        .page-body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px;
-            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
-        .page-body {
+        .letter-container {
             background-color: #ffffff;
             padding: 40px;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
@@ -33,7 +33,7 @@
         }
         .letter-header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 1.7em;
             color: #3498db;
         }
         .letter-body {
@@ -55,6 +55,7 @@
 </head>
 <body>
     <div class="page-body">
+        <div class="letter-container">
         <header class="letter-header input-field" name="Header">
 # John Doe
 
@@ -87,6 +88,7 @@ I'm looking forward to working closely with you and your team on this exciting v
 John Doe
 Project Lead
         </footer>
+    </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
