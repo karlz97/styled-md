@@ -5,13 +5,13 @@
     align-items: center;
     height: 100vh;
     background-color: #f7f7f7;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .letter-container {
     background: white;
     padding: 40px;
     width: 600px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     border: 1px solid #ddd;
 }

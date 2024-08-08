@@ -3,13 +3,12 @@
     line-height: 1.2;
     padding: 0;
     background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .resume-container {
-    padding: 50px 40px 40px;
+    padding: 20px 40px 40px;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    width: 780px;
 }
 
 header {

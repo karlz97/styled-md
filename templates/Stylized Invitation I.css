@@ -4,9 +4,9 @@
     font-family: 'Cormorant Garamond', serif;
     line-height: 1.6;
     color: #333;
-    /* display: flex; */
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
 
@@ -14,7 +14,6 @@ div#letter-content {
     border: 40px solid #e6d0b1;
     padding: 60px;
     background-color: #fff;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
 div {

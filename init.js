@@ -7,37 +7,54 @@ const marked = require('marked');
 
 const templatesDir = path.join(__dirname, 'templates');
 
+// async function generateThumbnail(htmlFilePath, outputPath) {
+//     const browser = await puppeteer.launch();
+//     const page = await browser.newPage();
+//     await page.setViewport({width: 900, height: 900, deviceScaleFactor: 0});
+    
+//     // Read the HTML file
+//     const htmlContent = await fs.readFile(htmlFilePath, 'utf-8');
+    
+//     // Inject the Marked library and our custom script
+//     const modifiedHtmlContent = htmlContent.replace('</body>', `
+//         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+//         <script>
+//             document.addEventListener('DOMContentLoaded', function() {
+//                 const inputFields = document.querySelectorAll('.input-field');
+//                 inputFields.forEach(field => {
+//                     const markdown = field.innerHTML.trim();
+//                     field.innerHTML = marked.parse(markdown);
+//                 });
+//             });
+//         </script>
+//     </body>`);
+
+//     // Set the content and wait for it to load
+//     await page.setContent(modifiedHtmlContent, { waitUntil: 'networkidle0' });
+    
+//     await page.screenshot({ path: outputPath, fullPage: false });
+//     await browser.close();
+
+//     // Resize the image to ensure it's exactly 300x300
+//     await sharp(outputPath)
+//         .resize(300, 700, { fit: 'cover' })
+//         .toFile(outputPath.replace('.png', '_resized.png'));
+
+//     // Replace the original screenshot with the resized one
+//     await fs.rename(outputPath.replace('.png', '_resized.png'), outputPath);
+// }
+
 async function generateThumbnail(htmlFilePath, outputPath) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setViewport({width: 800, height: 800, deviceScaleFactor: 0});
-    
-    // Read the HTML file
-    const htmlContent = await fs.readFile(htmlFilePath, 'utf-8');
-    
-    // Inject the Marked library and our custom script
-    const modifiedHtmlContent = htmlContent.replace('</body>', `
-        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const inputFields = document.querySelectorAll('.input-field');
-                inputFields.forEach(field => {
-                    const markdown = field.innerHTML.trim();
-                    field.innerHTML = marked.parse(markdown);
-                });
-            });
-        </script>
-    </body>`);
-
-    // Set the content and wait for it to load
-    await page.setContent(modifiedHtmlContent, { waitUntil: 'networkidle0' });
-    
+    await page.goto(`file://${htmlFilePath}`);
     await page.screenshot({ path: outputPath, fullPage: false });
     await browser.close();
 
-    // Resize the image to ensure it's exactly 300x300
+    // Resize the image to ensure it's exactly 700x300
     await sharp(outputPath)
-        .resize(300, 300, { fit: 'cover' })
+        // .resize(300, 700, { fit: 'cover' })
         .toFile(outputPath.replace('.png', '_resized.png'));
 
     // Replace the original screenshot with the resized one
@@ -51,7 +68,8 @@ async function extractTemplateMetadata(htmlFilePath) {
     console.log(metaTag.attr('template-description'));
     return {
         name: metaTag.attr('template-name'),
-        tag: metaTag.attr('template-tag'),
+        rawTag: metaTag.attr('template-tag'),
+        author: metaTag.attr('template-author'),
         description: metaTag.attr('template-description')
     };
 }
@@ -78,12 +96,11 @@ async function generateTemplatesJson() {
                 console.log(`Thumbnail generated for ${file}`);
             }
 
-            const tags = metadata.tag.split(',').map(tag => tag.trim());
+            const tags = metadata.rawTag.split(',').map(tag => tag.trim());
             tags.forEach(tag => allTags.add(tag));
-
+            console.log(metadata);
             templates.push({
-                name: metadata.name,
-                description: metadata.description,
+                ...metadata,
                 tags: tags,
                 thumbnailUrl: `templates/${path.basename(file, '.html')}.png`
             });

@@ -2,14 +2,30 @@
   "templates": [
     {
       "name": "Concise Letter I",
-      "description": "A concise letter template.",
+      "rawTag": "letter,formal,concise",
+      "author": "Styled-md",
+      "description": "A clean and concise letter template suitable for formal correspondence.",
       "tags": [
-        "letter"
+        "letter",
+        "formal",
+        "concise"
       ],
       "thumbnailUrl": "templates/Concise Letter I.png"
     },
     {
+      "name": "Concise Letter I",
+      "rawTag": "letter,concise",
+      "author": "Styled-md",
+      "tags": [
+        "letter",
+        "concise"
+      ],
+      "thumbnailUrl": "templates/Concise Letter II.png"
+    },
+    {
       "name": "Stylized Invitation I",
+      "rawTag": "invitation, stylized",
+      "author": "Styled-md",
       "description": "An invitation template with a stylized design.",
       "tags": [
         "invitation",
@@ -19,17 +35,25 @@
     },
     {
       "name": "Time New Roam Resume",
-      "description": "A professional resume template with a clean design.",
+      "rawTag": "resume,professional,clean",
+      "author": "Styled-md",
+      "description": "A clean and professional resume template inspired by classic designs.",
       "tags": [
-        "resume"
+        "resume",
+        "professional",
+        "clean"
       ],
       "thumbnailUrl": "templates/Time New Roam Resume.png"
     }
   ],
   "allTags": [
     "letter",
+    "formal",
+    "concise",
     "invitation",
     "stylized",
-    "resume"
+    "resume",
+    "professional",
+    "clean"
   ]
 }
