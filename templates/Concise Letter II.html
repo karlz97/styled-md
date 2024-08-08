@@ -5,69 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="template-meta" 
         template-name="Concise Letter II" 
-        template-tag="letter,concise" 
-        description="A clean and concise letter template"
+        template-tag="letter,concise,elegant" 
+        template-description="An elegant and concise letter template with a modern touch"
         template-author="Styled-md">
-    <title>Concise Letter I</title>
+    <meta name="template-instruction" content="Use '# Your Name' for the main title. Use regular paragraphs for address and date. Use '## Dear [Recipient],' for salutation. Main content should be in regular paragraphs. Use '**bold**' for emphasis and '*italic*' for subtle emphasis. Use '### Sincerely,' for the closing." />
+    <title>Concise Letter II</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: #333;
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            /* background-image: 
-                linear-gradient(45deg, rgba(0, 0, 0, 0.25) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.25) 75%, rgba(0, 0, 0, 0.25)),
-                linear-gradient(135deg, rgba(0, 0, 0, 0.25) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.25) 75%, rgba(0, 0, 0, 0.25));
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px; */
-
+            padding: 40px;
+            background-color: #f9f9f9;
+        }
+        .page-body {
+            background-color: #ffffff;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
         }
         .letter-header {
-            text-align: right;
-            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
         }
         .letter-header h1 {
             margin: 0;
-            font-size: 1.5em;
-            text-align: left;
+            font-size: 2.5em;
+            color: #3498db;
         }
         .letter-body {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .letter-body h2 {
+            color: #2c3e50;
         }
         .letter-footer {
             margin-top: 40px;
+            border-top: 1px solid #ecf0f1;
+            padding-top: 20px;
+        }
+        .letter-footer h3 {
+            color: #3498db;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-<div id="body">
-    <div class="letter-header input-field">
-        <h1>Your Name</h1>
-        <p>Your Address<br>
-        City, State ZIP Code<br>
-        Phone: (123) 456-7890<br>
-        Email: your.email@example.com</p>
-        <p>Date: [Current Date]</p>
+    <div class="page-body">
+        <header class="letter-header input-field" name="Header">
+# John Doe
+
+123 Main Street
+City, State 12345
+Phone: (123) 456-7890
+Email: john.doe@example.com
+
+July 27, 2024
+        </header>
+
+        <main class="letter-body input-field" name="Content">
+## Dear Jane Smith,
+
+I hope this letter finds you well. I am writing to discuss the upcoming project that our teams will be collaborating on. As we move forward, I wanted to highlight a few key points that I believe will be crucial to our success.
+
+**First and foremost**, I want to emphasize the importance of open communication. Regular updates and transparent discussions will be vital to ensuring we stay on track and address any challenges promptly.
+
+Secondly, I propose we set up a *weekly video conference* to review our progress and align our strategies. This will help us maintain momentum and make necessary adjustments in real-time.
+
+Lastly, I've attached a preliminary timeline for the project. Please review it at your earliest convenience and let me know if you have any concerns or suggestions for improvement.
+
+I'm looking forward to working closely with you and your team on this exciting venture. Together, I'm confident we can achieve great results.
+
+        </main>
+
+        <footer class="letter-footer input-field" name="Footer">
+### Sincerely,
+
+John Doe
+Project Lead
+        </footer>
     </div>
-
-    <div class="letter-body input-field">
-        <p>Dear [Recipient's Name],</p>
-    
-        <p>Your letter content goes here. Keep it concise and to the point. Use paragraphs to separate different ideas or sections of your letter.</p>
-
-        <p>You can include multiple paragraphs as needed. Remember to keep your language professional and courteous throughout the letter.</p>
-
-        <p>Conclude your letter with a brief summary or call to action, depending on the purpose of your letter.</p>
-
-    </div>
-
-    <div class="letter-footer input-field">
-        <p>Sincerely,</p>
-        <p>Your Name<br>
-        Your Title (if applicable)</p>
-    </div>
-</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputFields = document.querySelectorAll('.input-field');
+            inputFields.forEach(field => {
+                const markdown = field.innerHTML.trim();
+                field.innerHTML = marked.parse(markdown);
+            });
+        });
+    </script>
 </body>
 </html>
