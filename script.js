@@ -277,18 +277,9 @@ async function exportPNG() {
         const instructionMeta = templateDoc.querySelector('meta[name="template-instruction"]');
         const instructionContent = instructionMeta ? instructionMeta.getAttribute('content') : '';
 
-        // Add the instruction to the editor
-        const instructionSection = document.createElement('div');
-        instructionSection.className = 'card mb-3';
-        instructionSection.innerHTML = `
-            <div class="card-body">
-                <h3 class="card-title">Template Instruction:</h3>
-                <div id="editor-instruction">
-                    <p class="card-text">${instructionContent}</p>
-                </div>
-            </div>
-        `;
-        editorInputFields.appendChild(instructionSection);
+        // Update the instruction in the editor
+        const editorInstruction = document.getElementById('editor-instruction');
+        editorInstruction.innerHTML = `<p class="card-text">${instructionContent}</p>`;
 
         inputFields.forEach((field, index) => {
             const name = field.getAttribute('name') || 
