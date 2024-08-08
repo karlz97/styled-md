@@ -2,8 +2,6 @@ import * as html2pdf from 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
 
 document.addEventListener('DOMContentLoaded', async function() {
-
-
     const previewCanvas = document.getElementById('previewCanvas');
 
     const htmlPreview = previewCanvas.attachShadow({mode: 'open'});     // const htmlPreview = document.getElementById('htmlPreview');
@@ -65,135 +63,136 @@ document.addEventListener('DOMContentLoaded', async function() {
     templates = templatesData.templates;
     allTags = templatesData.allTags;
 
-// Function to export PDF
-async function exportDom() {
-    const pageBody = htmlPreview.querySelector('.page-body');
+    // Function to export PDF
+    async function exportDom() {
+        const pageBody = htmlPreview.querySelector('.page-body');
 
-    // Clone the page-body element
-    const clonedPageBody = pageBody.cloneNode(true);
+        // Clone the page-body element
+        const clonedPageBody = pageBody.cloneNode(true);
 
-    // Clear page size and scaling settings
-    clearPageSize(clonedPageBody);
-    updateScale(clonedPageBody,1)
+        // Clear page size and scaling settings
+        clearPageSize(clonedPageBody);
+        updateScale(clonedPageBody,1)
 
-    // Create a new window
-    const printWindow = window.open('', '_blank');
+        // Create a new window
+        const printWindow = window.open('', '_blank');
 
-    // Write the HTML content to the new window
-    printWindow.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>${documentTitle.value || 'Document'}</title>
-            <style>
-                ${customCSS}
-                body {
-                    margin: 0;
-                    padding: 0;
-                    justify-content: center;
-                    align-items: center;
-                    min-height: 100vh;
-                }
-                .page-body {
-                    margin: auto;
-                    box-shadow: none;
-                    background-image: none;
-                }
-            </style>
-        </head>
-        <body>
-            ${clonedPageBody.outerHTML}
-            <script>
-                window.onload = function() {
-                    window.print();
-                    window.onafterprint = function() {
-                        window.close();
+        // Write the HTML content to the new window
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>${documentTitle.value || 'Document'}</title>
+                <style>
+                    ${customCSS}
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
                     }
-                }
-            </script>
-        </body>
-        </html>
-    `);
+                    .page-body {
+                        margin: auto;
+                        box-shadow: none;
+                        background-image: none;
+                    }
+                </style>
+            </head>
+            <body>
+                ${clonedPageBody.outerHTML}
+                <script>
+                    window.onload = function() {
+                        window.print();
+                        window.onafterprint = function() {
+                            window.close();
+                        }
+                    }
+                </script>
+            </body>
+            </html>
+        `);
 
-    // printWindow.document.close();
-}
+        // printWindow.document.close();
+    }
 
-async function generateCanvas() {
-    const pageBody = htmlPreview.querySelector('.page-body');
-    const dimensions = getPageDimensions(currentPageSize);
+    async function generateCanvas() {
+        const pageBody = htmlPreview.querySelector('.page-body');
+        const dimensions = getPageDimensions(currentPageSize);
 
-    // Create a temporary container to render the page-body
-    const tempContainer = document.createElement('div');
-    tempContainer.style.position = 'absolute';
-    tempContainer.style.left = '-9999px';
-    tempContainer.style.top = '-9999px';
-    
-    document.body.appendChild(tempContainer);
+        // Create a temporary container to render the page-body
+        const tempContainer = document.createElement('div');
+        tempContainer.style.position = 'absolute';
+        tempContainer.style.left = '-9999px';
+        tempContainer.style.top = '-9999px';
+        
+        document.body.appendChild(tempContainer);
 
-    // Clone the page-body and its styles
-    const clonedPageBody = pageBody.cloneNode(true);
-    clonedPageBody.style.width = `${dimensions.width}px`;
-    clonedPageBody.style.height = `${dimensions.height}px`;
-    updateScale(clonedPageBody,1)
-    tempContainer.appendChild(clonedPageBody);
+        // Clone the page-body and its styles
+        const clonedPageBody = pageBody.cloneNode(true);
+        clonedPageBody.style.width = `${dimensions.width}px`;
+        clonedPageBody.style.height = `${dimensions.height}px`;
+        updateScale(clonedPageBody,1)
+        tempContainer.appendChild(clonedPageBody);
 
-    // Apply custom CSS
-    const styleElement = document.createElement('style');
-    styleElement.textContent = customCSS;
-    tempContainer.appendChild(styleElement);
+        // Apply custom CSS
+        const styleElement = document.createElement('style');
+        styleElement.textContent = customCSS;
+        tempContainer.appendChild(styleElement);
 
-    try {
-        // Use html2canvas to capture the page-body
-        const canvas = await html2canvas(tempContainer, {
-            width: dimensions.width,
-            height: dimensions.height,
-            scale: 4, // Increase scale for higher quality
-            useCORS: true,
-            logging: false,
+        try {
+            // Use html2canvas to capture the page-body
+            const canvas = await html2canvas(tempContainer, {
+                width: dimensions.width,
+                height: dimensions.height,
+                scale: 4, // Increase scale for higher quality
+                useCORS: true,
+                logging: false,
+            });
+            // Return the canvas for reuse in exportPDF
+            return canvas;
+        } catch (error) {
+            console.error('Error generate Canvas:', error);
+            return null;
+        } finally {
+            // Clean up
+            document.body.removeChild(tempContainer);
+        }
+
+    }
+
+    async function exportPng() {
+        const canvas = await generateCanvas();
+        if (!canvas) {
+            console.error('Failed to generate canvas for PDF export');
+            return;
+        }
+        // Convert canvas to PNG and download
+        const pngData = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngData;
+        downloadLink.download = `${documentTitle.value || 'document'}.png`;
+        downloadLink.click();
+    }
+
+    async function exportCanvsPdf() {
+        const canvas = await generateCanvas();
+        if (!canvas) {
+            console.error('Failed to generate canvas for PDF export');
+            return;
+        }
+
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new window.jsPDF({
+            orientation: 'portrait',
+            unit: 'px',
+            format: [canvas.width, canvas.height]
         });
-        // Return the canvas for reuse in exportPDF
-        return canvas;
-    } catch (error) {
-        console.error('Error generate Canvas:', error);
-        return null;
-    } finally {
-        // Clean up
-        document.body.removeChild(tempContainer);
+
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save(`${documentTitle.value || 'document'}.pdf`);
     }
-
-}
-
-async function exportPng() {
-    const canvas = await generateCanvas();
-    if (!canvas) {
-        console.error('Failed to generate canvas for PDF export');
-        return;
-    }
-    // Convert canvas to PNG and download
-    const pngData = canvas.toDataURL('image/png');
-    const downloadLink = document.createElement('a');
-    downloadLink.href = pngData;
-    downloadLink.download = `${documentTitle.value || 'document'}.png`;
-    downloadLink.click();
-}
-
-async function exportCanvsPdf() {
-    const canvas = await generateCanvas();
-    if (!canvas) {
-        console.error('Failed to generate canvas for PDF export');
-        return;
-    }
-
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new window.jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [canvas.width, canvas.height]
-    });
-
-    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-    pdf.save(`${documentTitle.value || 'document'}.pdf`);
-}
+    
     function showTemplateModal() {
         renderTagFilter();
         renderTemplateGrid();
