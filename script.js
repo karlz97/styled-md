@@ -221,15 +221,33 @@ async function exportPNG() {
         applyCustomCSS();
         templateModal.hide();
         await applyTemplate(template.name);
-        updatePreview()
+        updatePreview();
     }
 
     async function fetchTemplateCSS(templateName) {
         try {
             const response = await fetch(`templates/${templateName}.css`);
-            return await response.text();
+            if (response.ok) {
+                return await response.text();
+            } else {
+                throw new Error('CSS file not found');
+            }
         } catch (error) {
-            console.error('Error loading template CSS:', error);
+            console.log('CSS file not found, fetching from HTML...');
+            return await fetchCSSFromHTML(templateName);
+        }
+    }
+
+    async function fetchCSSFromHTML(templateName) {
+        try {
+            const response = await fetch(`templates/${templateName}.html`);
+            const htmlText = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlText, 'text/html');
+            const styleElement = doc.querySelector('style');
+            return styleElement ? styleElement.textContent : '';
+        } catch (error) {
+            console.error('Error fetching CSS from HTML:', error);
             return '';
         }
     }
