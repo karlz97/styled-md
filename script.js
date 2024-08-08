@@ -73,8 +73,9 @@ async function exportPDF() {
     // Clone the page-body element
     const clonedPageBody = pageBody.cloneNode(true);
 
-    // Clear page size settings
+    // Clear page size and scaling settings
     clearPageSize(clonedPageBody);
+    updateScale(clonedPageBody,1)
 
     // Create a new window
     const printWindow = window.open('', '_blank');
