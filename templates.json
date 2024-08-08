@@ -13,12 +13,14 @@
       "thumbnailUrl": "templates/Concise Letter I.png"
     },
     {
-      "name": "Concise Letter I",
-      "rawTag": "letter,concise",
+      "name": "Concise Letter II",
+      "rawTag": "letter,concise,elegant",
       "author": "Styled-md",
+      "description": "An elegant and concise letter template with a modern touch",
       "tags": [
         "letter",
-        "concise"
+        "concise",
+        "elegant"
       ],
       "thumbnailUrl": "templates/Concise Letter II.png"
     },
@@ -50,6 +52,7 @@
     "letter",
     "formal",
     "concise",
+    "elegant",
     "invitation",
     "stylized",
     "resume",
