@@ -260,7 +260,6 @@ async function exportPNG() {
                 box-shadow: 0 0 25px rgba(0,0,0,0.4)
             }
             ${customCSS}`;
-        //styleElement.textContent = `@scope {\n${customCSS}\n}`;
     }
 
     async function applyTemplate(templateName) {
