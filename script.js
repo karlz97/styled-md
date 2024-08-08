@@ -119,7 +119,7 @@ async function exportDom() {
     // printWindow.document.close();
 }
 
-async function exportPng() {
+async function generateCanvas() {
     const pageBody = htmlPreview.querySelector('.page-body');
     const dimensions = getPageDimensions(currentPageSize);
 
@@ -152,26 +152,34 @@ async function exportPng() {
             useCORS: true,
             logging: false,
         });
-
-        // Convert canvas to PNG and download
-        const pngData = canvas.toDataURL('image/png');
-        const downloadLink = document.createElement('a');
-        downloadLink.href = pngData;
-        downloadLink.download = `${documentTitle.value || 'document'}.png`;
-        downloadLink.click();
-
-        return canvas; // Return the canvas for reuse in exportPDF
+        // Return the canvas for reuse in exportPDF
+        return canvas;
     } catch (error) {
-        console.error('Error exporting PNG:', error);
+        console.error('Error generate Canvas:', error);
         return null;
     } finally {
         // Clean up
         document.body.removeChild(tempContainer);
     }
+
+}
+
+async function exportPng() {
+    const canvas = await generateCanvas();
+    if (!canvas) {
+        console.error('Failed to generate canvas for PDF export');
+        return;
+    }
+    // Convert canvas to PNG and download
+    const pngData = canvas.toDataURL('image/png');
+    const downloadLink = document.createElement('a');
+    downloadLink.href = pngData;
+    downloadLink.download = `${documentTitle.value || 'document'}.png`;
+    downloadLink.click();
 }
 
 async function exportCanvsPdf() {
-    const canvas = await exportPng();
+    const canvas = await generateCanvas();
     if (!canvas) {
         console.error('Failed to generate canvas for PDF export');
         return;
