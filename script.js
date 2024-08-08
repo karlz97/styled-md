@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Function to export PDF
     async function exportPDF() {
         const pageBody = htmlPreview.querySelector('.page-body');
-        const dimensions = getPageDimensions(currentPageSize);
     
         // Clone the page-body element
         const clonedPageBody = pageBody.cloneNode(true);
