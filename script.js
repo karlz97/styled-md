@@ -196,7 +196,7 @@ async function exportPNG() {
 
         templateGrid.innerHTML = filteredTemplates.map((template, index) => `
             <div class="col">
-                <div class="card h-100">
+                <div class="card h-100 template-card">
                     <img src="${template.thumbnailUrl}" class="card-img-top" alt="${template.name} preview">
                     <div class="card-body">
                         <h5 class="card-title">${template.name}</h5>
