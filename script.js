@@ -195,24 +195,23 @@ async function exportPNG() {
             : templates;
 
         templateGrid.innerHTML = filteredTemplates.map((template, index) => `
-            <div class="col">
-                <div class="card h-100 template-card">
+            <div class="col-md-4 col-sm-6 mb-3">
+                <div class="card h-100 template-card" data-index="${index}">
                     <img src="${template.thumbnailUrl}" class="card-img-top" alt="${template.name} preview">
-                    <div class="card-body">
-                        <h5 class="card-title">${template.name}</h5>
-                        <p class="card-text">${template.description}</p>
-                        <p class="card-text">
-                            ${template.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}
+                    <div class="card-body p-2">
+                        <h6 class="card-title mb-1">${template.name}</h6>
+                        <p class="card-text small mb-1">${template.description}</p>
+                        <p class="card-text mb-1">
+                            ${template.tags.map(tag => `<span class="badge bg-secondary me-1">${tag}</span>`).join('')}
                         </p>
-                        <p class="card-text"><small class="text-muted">Author: ${template.author}</small></p>
-                        <button class="btn btn-primary select-template" data-index="${index}">Select</button>
+                        <p class="card-text"><small class="text-muted">By ${template.author}</small></p>
                     </div>
                 </div>
             </div>
         `).join('\n');
 
-        templateGrid.querySelectorAll('.select-template').forEach(button => {
-            button.addEventListener('click', () => selectTemplate(parseInt(button.dataset.index)));
+        templateGrid.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', () => selectTemplate(parseInt(card.dataset.index)));
         });
     }
 
