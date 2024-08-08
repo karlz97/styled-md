@@ -204,6 +204,7 @@ async function exportPNG() {
                         <p class="card-text">
                             ${template.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}
                         </p>
+                        <p class="card-text"><small class="text-muted">Author: ${template.author}</small></p>
                         <button class="btn btn-primary select-template" data-index="${index}">Select</button>
                     </div>
                 </div>
@@ -272,9 +273,25 @@ async function exportPNG() {
         const editorInputFields = document.getElementById('editor-input-fields');
         editorInputFields.innerHTML = ''; // Clear existing fields
 
+        // Get the template instruction
+        const instructionMeta = templateDoc.querySelector('meta[name="template-instruction"]');
+        const instructionContent = instructionMeta ? instructionMeta.getAttribute('content') : '';
+
+        // Add the instruction to the editor
+        const instructionSection = document.createElement('div');
+        instructionSection.className = 'card mb-3';
+        instructionSection.innerHTML = `
+            <div class="card-body">
+                <h3 class="card-title">Template Instruction:</h3>
+                <div id="editor-instruction">
+                    <p class="card-text">${instructionContent}</p>
+                </div>
+            </div>
+        `;
+        editorInputFields.appendChild(instructionSection);
+
         inputFields.forEach((field, index) => {
             const name = field.getAttribute('name') || 
-                // field.tagName;
                 (s => s.at(0).toUpperCase()+s.slice(1).toLowerCase())(field.tagName);
             const content = field.innerHTML.trim();
 
