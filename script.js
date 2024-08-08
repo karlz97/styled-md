@@ -159,12 +159,33 @@ async function exportPNG() {
         downloadLink.href = pngData;
         downloadLink.download = `${documentTitle.value || 'document'}.png`;
         downloadLink.click();
+
+        return canvas; // Return the canvas for reuse in exportPDF
     } catch (error) {
         console.error('Error exporting PNG:', error);
+        return null;
     } finally {
         // Clean up
         document.body.removeChild(tempContainer);
     }
+}
+
+async function exportPDF() {
+    const canvas = await exportPNG();
+    if (!canvas) {
+        console.error('Failed to generate canvas for PDF export');
+        return;
+    }
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+    });
+
+    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+    pdf.save(`${documentTitle.value || 'document'}.pdf`);
 }
     function showTemplateModal() {
         renderTagFilter();
