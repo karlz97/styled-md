@@ -373,6 +373,8 @@ async function exportCanvsPdf() {
 
     exportPdfBtn.addEventListener('click', exportDom);
     exportPngBtn.addEventListener('click', exportPng);
+    const exportCanvasPdfBtn = document.getElementById('exportCanvasPdfBtn');
+    exportCanvasPdfBtn.addEventListener('click', exportCanvsPdf);
 
     // Page size change functionality -- not working, need to fix:
     pageSizeDropdown.querySelectorAll('.dropdown-item').forEach(function(item) {
