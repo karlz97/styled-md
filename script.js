@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const clonedPageBody = pageBody.cloneNode(true);
         clonedPageBody.style.width = `${dimensions.width}px`;
         clonedPageBody.style.height = `${dimensions.height}px`;
-        updateScale(clonedPageBody,1)
+        updateScale(clonedPageBody, 1);
+        clearBackground(clonedPageBody); // Clear the background of the cloned page body
         tempContainer.appendChild(clonedPageBody);
 
         // Apply custom CSS
@@ -158,7 +159,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             // Clean up
             document.body.removeChild(tempContainer);
         }
-
     }
 
     async function exportPng() {
@@ -414,6 +414,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         pageBody.style.width = '';
         pageBody.style.height = '';
         pageBody.className = 'page-body';
+    }
+
+    function clearBackground(element) {
+        element.style.backgroundImage = 'none';
+        element.style.boxShadow = 'none';
     }
 
     function getPageDimensions(size) {
