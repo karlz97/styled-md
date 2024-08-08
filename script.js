@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     allTags = templatesData.allTags;
 
 // Function to export PDF
-async function exportPDF() {
+async function exportDom() {
     const pageBody = htmlPreview.querySelector('.page-body');
 
     // Clone the page-body element
@@ -119,7 +119,7 @@ async function exportPDF() {
     // printWindow.document.close();
 }
 
-async function exportPNG() {
+async function exportPng() {
     const pageBody = htmlPreview.querySelector('.page-body');
     const dimensions = getPageDimensions(currentPageSize);
 
@@ -170,8 +170,8 @@ async function exportPNG() {
     }
 }
 
-async function exportPDF() {
-    const canvas = await exportPNG();
+async function exportCanvsPdf() {
+    const canvas = await exportPng();
     if (!canvas) {
         console.error('Failed to generate canvas for PDF export');
         return;
@@ -371,8 +371,8 @@ async function exportPDF() {
 
     pickTemplateLink.addEventListener('click', showTemplateModal);
 
-    exportPdfBtn.addEventListener('click', exportPDF);
-    exportPngBtn.addEventListener('click', exportPNG);
+    exportPdfBtn.addEventListener('click', exportDom);
+    exportPngBtn.addEventListener('click', exportPng);
 
     // Page size change functionality -- not working, need to fix:
     pageSizeDropdown.querySelectorAll('.dropdown-item').forEach(function(item) {
