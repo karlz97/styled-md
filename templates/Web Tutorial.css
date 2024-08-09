@@ -6,14 +6,12 @@
 /* optional */
 .page-body {
     font-family: Arial, sans-serif;
-    /* line-height: 1.6; */
     color: #333;
-    /* display: flex; */
 }
 
 .tutorial-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: 20px;
     background-color: #ffffff;
 }
