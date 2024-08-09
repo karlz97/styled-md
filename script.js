@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     templates = templatesData.templates;
     allTags = templatesData.allTags;
 
+    // Select tutorial template on page load
+    await selectTutorialTemplate();
     
 
 
@@ -531,6 +533,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             stretchCheckbox.checked = false;
             originalBorder = {};
             originalAlignSelf = {};
+        }
+    }
+
+    async function selectTutorialTemplate() {
+        const tutorialTemplate = templates.find(t => t.name === "Tutorial");
+        if (tutorialTemplate) {
+            await selectTemplateByIndex(templates.indexOf(tutorialTemplate));
+        } else {
+            console.error("Tutorial template not found");
         }
     }
 });
