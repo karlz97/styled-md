@@ -5,20 +5,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     const previewCanvas = document.getElementById('previewCanvas');
 
     const htmlPreview = previewCanvas.attachShadow({mode: 'open'});     // const htmlPreview = document.getElementById('htmlPreview');
-    
     htmlPreview.innerHTML = `
         <div id="htmlPreviewContent">
-            <div class="page-body">
-                <header class="input-field invitation-header">
-                    <h1>John Doe123</h1>
-                    <h2>123-456-7890</h2>
-                    <h3>Location: New York, NY</h3>
-                    <h3><a href="https://linkedin.com/in/johndoe">LinkedIn</a></h3>
-                </header>
-                <main class="input-field invitation-main">
-                    <p>Hi, I'm John Doe. I'm a software developer with 5 years of experience...</p>
-                </main>
-            </div>
         </div>`;
     const htmlPreviewContent = htmlPreview.getElementById('htmlPreviewContent');    //const htmlPreviewContent = document.getElementById('htmlPreviewContent');
     
@@ -48,6 +36,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     let selectedTags = new Set();
     let template
 
+    // 
+    pickTemplateLink.addEventListener('click', showTemplateModal);
+    exportPdfBtn.addEventListener('click', exportDom);
+    exportPngBtn.addEventListener('click', exportPng);
+    const exportCanvasPdfBtn = document.getElementById('exportCanvasPdfBtn');
+    exportCanvasPdfBtn.addEventListener('click', exportCanvsPdf);
+
     // Load the modal HTML
     const modalResponse = await fetch('template-market.html');
     const modalHtml = await modalResponse.text();
@@ -62,6 +57,19 @@ document.addEventListener('DOMContentLoaded', async function() {
     const templatesData = await templatesResponse.json();
     templates = templatesData.templates;
     allTags = templatesData.allTags;
+
+    
+
+
+    // Page size change functionality
+    pageSizeDropdown.querySelectorAll('.dropdown-item').forEach(function(item) {
+        item.addEventListener('click', function(event) {
+            console.log(event.target.getAttribute('data-size'));
+            // updatePageSize(event.target.getAttribute('data-size'));
+            currentPageSize = event.target.getAttribute('data-size');
+            updatePreview();
+        });
+    });
 
     // Function to export PDF
     async function exportDom() {
@@ -122,10 +130,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // Create a temporary container to render the page-body
         const tempContainer = document.createElement('div');
-        tempContainer.style.position = 'absolute';
-        tempContainer.style.left = '-9999px';
-        tempContainer.style.top = '-9999px';
-        
         document.body.appendChild(tempContainer);
 
         // Clone the page-body and its styles
@@ -151,6 +155,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 logging: false,
             });
             // Return the canvas for reuse in exportPDF
+            console.log('Canvas generated successfully');
             return canvas;
         } catch (error) {
             console.error('Error generate Canvas:', error);
@@ -241,17 +246,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         `).join('\n');
 
         templateGrid.querySelectorAll('.template-card').forEach(card => {
-            card.addEventListener('click', () => selectTemplate(parseInt(card.dataset.index)));
+            card.addEventListener('click', () => {
+                selectTemplateByIndex(parseInt(card.dataset.index))
+                templateModal.hide();
+            });
         });
-    }
-
-    async function selectTemplate(index) {
-        template = templates[index];
-        customCSS = await fetchTemplateCSS(template.name);
-        applyCustomCSS();
-        templateModal.hide();
-        await applyTemplate(template.name);
-        updatePreview();
     }
 
     async function fetchTemplateCSS(templateName) {
@@ -320,12 +319,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         editorInputFields.innerHTML = ''; // Clear existing fields
 
         // Get the template instruction
-        const instructionMeta = templateDoc.querySelector('meta[name="template-instruction"]');
-        const instructionContent = instructionMeta ? instructionMeta.getAttribute('content') : '';
+        const instruction = templateDoc.querySelector('#template-instruction');
 
         // Update the instruction in the editor
-        const editorInstruction = document.getElementById('editor-instruction');
-        editorInstruction.innerHTML = `<p class="card-text">${instructionContent}</p>`;
+        const templateInstruction = document.getElementById('template-instruction');
+        templateInstruction.innerHTML = marked.parse(instruction.textContent);
 
         inputFields.forEach((field, index) => {
             const name = field.getAttribute('name') || 
@@ -353,6 +351,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     }
 
+    async function selectTemplateByIndex(index) {
+        template = templates[index];
+        customCSS = await fetchTemplateCSS(template.name);
+        applyCustomCSS();
+        await applyTemplate(template.name);
+        updatePreview();
+    }
+    
+    async function selectTemplate(name) {
+        customCSS = await fetchTemplateCSS(name);
+        applyCustomCSS();
+        await applyTemplate(name);
+        updatePreview();
+    }
+
+    
     function updatePreview() {
         const inputFields = document.querySelectorAll('#editor-input-fields textarea');
         const previewFields = htmlPreviewContent.querySelectorAll('.input-field');
@@ -373,23 +387,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.log('Custom CSS applied');
         updatePreview();
         console.log('Preview updated..');
-    });
-
-    pickTemplateLink.addEventListener('click', showTemplateModal);
-
-    exportPdfBtn.addEventListener('click', exportDom);
-    exportPngBtn.addEventListener('click', exportPng);
-    const exportCanvasPdfBtn = document.getElementById('exportCanvasPdfBtn');
-    exportCanvasPdfBtn.addEventListener('click', exportCanvsPdf);
-
-    // Page size change functionality -- not working, need to fix:
-    pageSizeDropdown.querySelectorAll('.dropdown-item').forEach(function(item) {
-        item.addEventListener('click', function(event) {
-            console.log(event.target.getAttribute('data-size'));
-            // updatePageSize(event.target.getAttribute('data-size'));
-            currentPageSize = event.target.getAttribute('data-size');
-            updatePreview();
-        });
     });
 
     function updatePageSize(size) {
