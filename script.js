@@ -58,10 +58,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     templates = templatesData.templates;
     allTags = templatesData.allTags;
 
-    // Select tutorial template on page load
-    await selectTutorialTemplate();
-    
-
+    // // Load init template
+    selectTemplate("Tutorial").then();
 
     // Page size change functionality
     pageSizeDropdown.querySelectorAll('.dropdown-item').forEach(function(item) {
@@ -249,7 +247,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         templateGrid.querySelectorAll('.template-card').forEach(card => {
             card.addEventListener('click', () => {
-                selectTemplateByIndex(parseInt(card.dataset.index))
+                selectTemplate(filteredTemplates[parseInt(card.dataset.index)].name);
                 templateModal.hide();
             });
         });
@@ -361,12 +359,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         updatePreview();
     }
     
-    // async function selectTemplate(name) {
-    //     customCSS = await fetchTemplateCSS(name);
-    //     applyCustomCSS();
-    //     await applyTemplate(name);
-    //     updatePreview();
-    // }
+    async function selectTemplate(name) {
+        customCSS = await fetchTemplateCSS(name);
+        applyCustomCSS();
+        await applyTemplate(name);
+        updatePreview();
+    }
 
     
     function updatePreview() {
@@ -533,15 +531,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             stretchCheckbox.checked = false;
             originalBorder = {};
             originalAlignSelf = {};
-        }
-    }
-
-    async function selectTutorialTemplate() {
-        const tutorialTemplate = templates.find(t => t.name === "Tutorial");
-        if (tutorialTemplate) {
-            await selectTemplateByIndex(templates.indexOf(tutorialTemplate));
-        } else {
-            console.error("Tutorial template not found");
         }
     }
 });
