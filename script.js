@@ -361,12 +361,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         updatePreview();
     }
     
-    async function selectTemplate(name) {
-        customCSS = await fetchTemplateCSS(name);
-        applyCustomCSS();
-        await applyTemplate(name);
-        updatePreview();
-    }
+    // async function selectTemplate(name) {
+    //     customCSS = await fetchTemplateCSS(name);
+    //     applyCustomCSS();
+    //     await applyTemplate(name);
+    //     updatePreview();
+    // }
 
     
     function updatePreview() {
