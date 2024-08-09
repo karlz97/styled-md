@@ -1,3 +1,9 @@
+/* Necessary */
+#template-instruction {
+    display: none;
+}
+
+/* optional */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Great+Vibes&display=swap');
 
 .page-body {

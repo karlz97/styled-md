@@ -36,7 +36,7 @@
 
 .tutorial-content {
     background-color: #ffffff;
-    padding: 20px;
+    padding: 10px;
     margin: 10px;
     border-radius: 5px;
     border: 1px solid #3498db;
@@ -46,12 +46,20 @@
     font-size: 23px;
     color: #2980b9;
     border-bottom: 2px solid #3498db;
-    margin: 0px;
+    margin-top: 20px;
 
 }
 
+.tutorial-content p {
+    /* padding: 10px; */
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
 .tutorial-content ul, .tutorial-content ol {
-    padding-left: 20px;
+    padding-left: 25px;
+    margin-top: 10px;
+    margin-bottom: 0px;
 }
 
 .tutorial-content code {

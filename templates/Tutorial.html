@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Template</title>
+    <meta name="template-meta" template-name="Tutorial" template-tag="tutorial" template-author="AI Assistant" template-description="A tutorial template for web applications">
+    <div id="template-instruction">
+Use this template to create a tutorial for your web application. Fill in the header with the app name and a brief description. In the main content, use Markdown to create sections for Introduction, Features, How to Use, and Tips & Tricks."
+    </div>
+    <link rel="stylesheet" href="Tutorial.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="page-body">
+    <div class="tutorial-container">
+        <header class="input-field tutorial-header">
+# Styled-md
+Create beautiful portable & pritable files from markdown!
+        </header>
+        <main class="input-field tutorial-content">
+## Introduction
+*Styled-md* is an opensource app that creates beautiful portable & pritable files (.pdf, .png and .webarchive) from markdown!
+- **Easy to use**: Just write your markdown and see the result in real-time.
+- **Template-market**: Build your document from a variety of templates: resume, letter, invitation, and more.
+- **Save your doc**: Save it as .png .webarchive or print as pdf!
+- **Local, light and private**: This app runs completely on your browser, no data is sent to the server.
+- **Open-source**
+
+
+## About the App
+
+**Buy Me a Coffee**: If this app helped you twice or more, please consider buying me a coffee to support my work. Thank you!
+
+**How to contribute:**
+This app is built upon bare html and javascript run on the client side.
+pull request and suggestion on implementation are extremly welcome.
+You can contribute by:
+- Create your owe template
+- Contribute to the code
+- Suggestion, feedbacks and issues are more than welcome! 
+
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputFields = document.querySelectorAll('.input-field');
+            inputFields.forEach(field => {
+                const markdown = field.textContent.trim();
+                field.innerHTML = marked.parse(markdown);
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

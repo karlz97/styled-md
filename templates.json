@@ -48,16 +48,14 @@
       "thumbnailUrl": "templates/Time New Roam Resume.png"
     },
     {
-      "name": "Web Tutorial",
-      "rawTag": "tutorial,web,guide",
+      "name": "Tutorial",
+      "rawTag": "tutorial",
       "author": "AI Assistant",
       "description": "A tutorial template for web applications",
       "tags": [
-        "tutorial",
-        "web",
-        "guide"
+        "tutorial"
       ],
-      "thumbnailUrl": "templates/Web Tutorial.png"
+      "thumbnailUrl": "templates/Tutorial.png"
     }
   ],
   "allTags": [
@@ -70,8 +68,6 @@
     "resume",
     "professional",
     "clean",
-    "tutorial",
-    "web",
-    "guide"
+    "tutorial"
   ]
 }

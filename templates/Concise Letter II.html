@@ -8,16 +8,23 @@
         template-tag="letter,concise,elegant" 
         template-description="An elegant and concise letter template with a modern touch"
         template-author="Styled-md">
-    <meta name="template-instruction" content="Use '# Your Name' for the main title. Use regular paragraphs for address and date. Use '## Dear [Recipient],' for salutation. Main content should be in regular paragraphs. Use '**bold**' for emphasis and '*italic*' for subtle emphasis. Use '### Sincerely,' for the closing." />
+        <div id="template-instruction">
+Use '# Your Name' for the main title. Use regular paragraphs for address and date. Use '## Dear [Recipient],' for salutation. Main content should be in regular paragraphs. Use '**bold**' for emphasis and '*italic*' for subtle emphasis. Use '### Sincerely,' for the closing." 
+        </div>
     <title>Concise Letter II</title>
     <style>
+        /* Necessary */
+        #template-instruction {
+            display: none;
+        }
+
+        /* optional */
         .page-body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
         .letter-container {
@@ -48,6 +55,9 @@
         }
         .letter-footer h3 {
             color: #3498db;
+        }
+        p {
+            white-space: pre-wrap;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

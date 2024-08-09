@@ -1,8 +1,13 @@
+/* Necessary */
+#template-instruction {
+    display: none;
+}
+
+/* optional */
 .page-body {
     font-family: 'Times New Roman', serif;
     line-height: 1.2;
     padding: 0;
-    background-color: #f9f9f9;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
