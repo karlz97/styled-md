@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             section.className = 'mb-3';
             section.innerHTML = `
                 <h4 class="form-label">${name}</h4>
-                <textarea class="form-control" rows="5" data-field-index="${index}">${content}</textarea>
+                <textarea class="form-control" rows="10" data-field-index="${index}">${content}</textarea>
             `;
             editorInputFields.appendChild(section);
         });

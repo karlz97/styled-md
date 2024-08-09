@@ -107,10 +107,6 @@ h4 { font-size: 12pt; }
   margin-bottom: 15px;
 }
 
-#documentTitle {
-
-}
-
 
 
 /* htmlPreview  */
@@ -129,4 +125,14 @@ h4 { font-size: 12pt; }
 
 .zooming-control {
   margin-top: 10px;
+}
+
+/* Template */
+#template-instruction li,
+#template-instruction p {
+  margin: 0px;
+  color:#434343;
+}
+#template-instruction p {
+  line-height: 2em;
 }
