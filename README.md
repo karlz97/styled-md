@@ -2,8 +2,7 @@
 Create **beautiful**
 **portable**, **printable** files from markdown!￼
 
-[templates/Stylized Invitation I](https://github.com/karlz97/styled-md/blob/main/templates/Letter%20II.png?raw=true)
-![Image](templates/Time New Roam Resume.png)
+![Image](https://github.com/karlz97/styled-md/blob/main/templates/readme-templates-demo.png?raw=true)
 
 
 ## Introduction
