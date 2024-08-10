@@ -1,28 +1,26 @@
 {
   "templates": [
     {
-      "name": "Concise Letter I",
-      "rawTag": "letter,formal,concise",
+      "name": "Letter I",
+      "rawTag": "letter, clean",
       "author": "Styled-md",
       "description": "A clean and concise letter template suitable for formal correspondence.",
       "tags": [
         "letter",
-        "formal",
-        "concise"
+        "clean"
       ],
-      "thumbnailUrl": "templates/Concise Letter I.png"
+      "thumbnailUrl": "templates/Letter I.png"
     },
     {
-      "name": "Concise Letter II",
-      "rawTag": "letter,concise,elegant",
+      "name": "Letter II",
+      "rawTag": "letter, stylized",
       "author": "Styled-md",
       "description": "An elegant and concise letter template with a modern touch",
       "tags": [
         "letter",
-        "concise",
-        "elegant"
+        "stylized"
       ],
-      "thumbnailUrl": "templates/Concise Letter II.png"
+      "thumbnailUrl": "templates/Letter II.png"
     },
     {
       "name": "Stylized Invitation I",
@@ -37,37 +35,33 @@
     },
     {
       "name": "Time New Roam Resume",
-      "rawTag": "resume,professional,clean",
+      "rawTag": "resume, professional",
       "author": "Styled-md",
       "description": "A clean and professional resume template inspired by classic designs.",
       "tags": [
         "resume",
-        "professional",
-        "clean"
+        "professional"
       ],
       "thumbnailUrl": "templates/Time New Roam Resume.png"
     },
     {
       "name": "Tutorial",
-      "rawTag": "tutorial",
-      "author": "AI Assistant",
+      "rawTag": "tutorial stylized",
+      "author": "Styled-md",
       "description": "A tutorial template for web applications",
       "tags": [
-        "tutorial"
+        "tutorial stylized"
       ],
       "thumbnailUrl": "templates/Tutorial.png"
     }
   ],
   "allTags": [
     "letter",
-    "formal",
-    "concise",
-    "elegant",
-    "invitation",
+    "clean",
     "stylized",
+    "invitation",
     "resume",
     "professional",
-    "clean",
-    "tutorial"
+    "tutorial stylized"
   ]
 }

@@ -6,6 +6,12 @@ body {
   color: #333;
 }
 
+.divider {
+  width: 2px;
+  background-color: #80bdff;
+  height: 20px;
+}
+
 h1, h2, h3, h4, h5, h6, .navbar-brand {
   font-family: 'Merriweather', serif;
   font-weight: 700;
