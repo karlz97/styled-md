@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="template-meta"
+            template-name="Stylized Invitation I"
+            template-tag="invitation, stylized"
+            template-description="An invitation template with a stylized design."
+            template-author="Styled-md"
+        />
+        <div id="template-instruction">
+Use '#' for the main title, '##' for section headers, and '###' for subtitles. Regular paragraphs for content. Use '**bold**' for emphasis." 
+        </div>
+        <title>Formal Invitation</title>
+        <link rel="stylesheet" href="Stylized Invitation I.css" />
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+    <body>
+        <div class="page-body">
+            <div id="letter-content">
+                <header class="input-field invitation-header" name="Header">
+# Annual Gala Dinner
+                </header>
+                <main class="input-field invitation-main" name="Content">
+Dear [Guest Name],
+
+You are cordially invited to attend our Annual Gala Dinner...
+
+## Event Details
+
+**Date:** Saturday, September 15, 2024
+**Time:** 7:00 PM
+**Venue:** Grand Ballroom, Luxury Hotel
+**Dress Code:** Black Tie
+
+## RSVP
+
+Please RSVP by August 15, 2024 to...
+                </main>
+                <footer class="input-field invitation-footer" name="Footer">
+### John Smith
+Event Organizer
+                </footer>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const inputFields = document.querySelectorAll('.input-field');
+                inputFields.forEach(field => {
+                    const markdown = field.textContent.trim();
+                    field.innerHTML = marked.parse(markdown);
+                });
+            });
+        </script>
+    </div>
+    </body>
+</html>

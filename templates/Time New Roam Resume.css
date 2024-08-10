@@ -1,0 +1,75 @@
+/* Necessary */
+#template-instruction {
+    display: none;
+}
+
+/* optional */
+.page-body {
+    font-family: 'Times New Roman', serif;
+    line-height: 1.2;
+    padding: 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.resume-container {
+    padding: 20px 40px 40px;
+    background-color: #fff;
+}
+
+header {
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    color: #2c3e50;
+    font-size: 28px;
+}
+
+header p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+h2 {
+    color: #2c3e50;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #eee;
+}
+
+h3 {
+    font-size: 15px;
+    font-weight: normal;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h3 strong {
+    font-size: 16.5px;
+}
+
+h3 :not(strong) {
+    text-align: right;
+}
+
+ul {
+    padding-left: 20px;
+    margin: 5px 0 10px 0;
+}
+
+li {
+    margin-bottom: 3px;
+}
+
+
+p {
+    margin: 5px 0;
+    white-space: pre-wrap;
+}

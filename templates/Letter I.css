@@ -1,0 +1,52 @@
+/* Necessary */
+#template-instruction {
+    display: none;
+}
+
+/* optional */
+.page-body {
+    font-family: "Georgia", serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+}
+
+.letter-container {
+    background: white;
+    padding: 40px;
+    width: 600px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    height: 7em;
+}
+
+.spacer {
+    height: 5em;
+}
+
+.address,
+.date {
+    line-height: 1.4;
+}
+
+main {
+    line-height: 1.6;
+}
+
+p {
+    margin: 0 0 15px 0;
+    white-space: pre-wrap;
+}
+
+p:last-child {
+    margin: 0;
+}

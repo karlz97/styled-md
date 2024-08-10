@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="template-meta" 
+        template-name="Letter II" 
+        template-tag="letter, stylized" 
+        template-description="An elegant and concise letter template with a modern touch"
+        template-author="Styled-md">
+        <div id="template-instruction">
+Use '# Your Name' for the main title. Use regular paragraphs for address and date. Use '## Dear [Recipient],' for salutation. Main content should be in regular paragraphs. Use '**bold**' for emphasis and '*italic*' for subtle emphasis. Use '### Sincerely,' for the closing." 
+        </div>
+    <title>Letter II</title>
+    <style>
+        /* Necessary */
+        #template-instruction {
+            display: none;
+        }
+
+        /* optional */
+        .page-body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .letter-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+        }
+        .letter-header {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .letter-header h1 {
+            margin: 0;
+            font-size: 1.7em;
+            color: #3498db;
+        }
+        .letter-body {
+            margin-bottom: 30px;
+        }
+        .letter-body h2 {
+            color: #2c3e50;
+        }
+        .letter-footer {
+            margin-top: 40px;
+            border-top: 1px solid #ecf0f1;
+            padding-top: 20px;
+        }
+        .letter-footer h3 {
+            color: #3498db;
+        }
+        p {
+            white-space: pre-wrap;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="page-body">
+        <div class="letter-container">
+        <header class="letter-header input-field" name="Header">
+# John Doe
+
+123 Main Street
+City, State 12345
+Phone: (123) 456-7890
+Email: john.doe@example.com
+
+July 27, 2024
+        </header>
+
+        <main class="letter-body input-field" name="Content">
+## Dear Jane Smith,
+
+I hope this letter finds you well. I am writing to discuss the upcoming project that our teams will be collaborating on. As we move forward, I wanted to highlight a few key points that I believe will be crucial to our success.
+
+**First and foremost**, I want to emphasize the importance of open communication. Regular updates and transparent discussions will be vital to ensuring we stay on track and address any challenges promptly.
+
+Secondly, I propose we set up a *weekly video conference* to review our progress and align our strategies. This will help us maintain momentum and make necessary adjustments in real-time.
+
+Lastly, I've attached a preliminary timeline for the project. Please review it at your earliest convenience and let me know if you have any concerns or suggestions for improvement.
+
+I'm looking forward to working closely with you and your team on this exciting venture. Together, I'm confident we can achieve great results.
+
+        </main>
+
+        <footer class="letter-footer input-field" name="Footer">
+### Sincerely,
+
+John Doe
+Project Lead
+        </footer>
+    </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputFields = document.querySelectorAll('.input-field');
+            inputFields.forEach(field => {
+                const markdown = field.innerHTML.trim();
+                field.innerHTML = marked.parse(markdown);
+            });
+        });
+    </script>
+</body>
+</html>

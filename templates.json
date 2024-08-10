@@ -1,0 +1,67 @@
+{
+  "templates": [
+    {
+      "name": "Letter I",
+      "rawTag": "letter, clean",
+      "author": "Styled-md",
+      "description": "A clean and concise letter template suitable for formal correspondence.",
+      "tags": [
+        "letter",
+        "clean"
+      ],
+      "thumbnailUrl": "templates/Letter I.png"
+    },
+    {
+      "name": "Letter II",
+      "rawTag": "letter, stylized",
+      "author": "Styled-md",
+      "description": "An elegant and concise letter template with a modern touch",
+      "tags": [
+        "letter",
+        "stylized"
+      ],
+      "thumbnailUrl": "templates/Letter II.png"
+    },
+    {
+      "name": "Stylized Invitation I",
+      "rawTag": "invitation, stylized",
+      "author": "Styled-md",
+      "description": "An invitation template with a stylized design.",
+      "tags": [
+        "invitation",
+        "stylized"
+      ],
+      "thumbnailUrl": "templates/Stylized Invitation I.png"
+    },
+    {
+      "name": "Time New Roam Resume",
+      "rawTag": "resume, professional",
+      "author": "Styled-md",
+      "description": "A clean and professional resume template inspired by classic designs.",
+      "tags": [
+        "resume",
+        "professional"
+      ],
+      "thumbnailUrl": "templates/Time New Roam Resume.png"
+    },
+    {
+      "name": "Tutorial",
+      "rawTag": "tutorial stylized",
+      "author": "Styled-md",
+      "description": "A tutorial template for web applications",
+      "tags": [
+        "tutorial stylized"
+      ],
+      "thumbnailUrl": "templates/Tutorial.png"
+    }
+  ],
+  "allTags": [
+    "letter",
+    "clean",
+    "stylized",
+    "invitation",
+    "resume",
+    "professional",
+    "tutorial stylized"
+  ]
+}

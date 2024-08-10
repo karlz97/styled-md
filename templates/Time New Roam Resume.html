@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="template-meta" 
+            template-name="Time New Roam Resume" 
+            template-tag="resume, professional" 
+            template-description="A clean and professional resume template inspired by classic designs."
+            template-author="Styled-md"
+        />
+        <div id="template-instruction">
+**Header** is for your basic contact information: Use '#' for your name, normal text for other information.
+
+**Content** is for the main body of your resume:
+- Use '##' for section headers like 'Professional Summary', 'Work Experience' and 'Projects'. Use
+'###' for  experience and dates. Use bold to mark experience and it will aligned to the left, non-bold content will aigned to the right
+- Use '- ' for bullet points in experience and skills sections. Use '\*\*bold\*\*' for emphasis."
+        </div>
+        <title>Professional Resume</title>
+        <link rel="stylesheet" href="Time New Roam Resume.css" />
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+    <body>
+    <div id="page-body" class="page-body">
+        <div class="resume-container">
+            <header class="input-field resume-header" name="Header">
+# John Doe
+johndoe@email.com | (123) 456-7890 | City, Country
+LinkedIn: linkedin.com/in/johndoe | GitHub: github.com/johndoe
+            </header>
+            <main class="input-field resume-main" name="Content">
+## Professional Summary
+
+Experienced software developer with a strong background in web technologies and a passion for creating efficient, scalable solutions. Skilled in full-stack development, with expertise in JavaScript, Python, and cloud technologies.
+
+## Work Experience
+
+### **Software Developer**   June 2017 - December 2019
+WebSolutions Co.
+- Developed and maintained multiple client websites using React and Node.js
+- Collaborated with UX designers to implement responsive and accessible web designs
+- Optimized database queries, resulting in a 30% reduction in page load times
+- Implemented CI/CD pipelines, reducing deployment time by 50%
+
+### **Junior Web Developer**   September 2015 - May 2017
+StartUp Dynamics
+- Assisted in the development of a social media analytics dashboard using Angular and D3.js
+- Implemented RESTful APIs using Express.js and integrated with various third-party services
+- Participated in daily stand-ups and sprint planning meetings, adhering to Agile methodologies
+
+## Education
+
+### **Bachelor of Science in Computer Science**   September 2013 - May 2017
+University of Technology
+- GPA: 3.8/4.0
+- Relevant coursework: Data Structures, Algorithms, Web Development, Database Systems
+- Senior Project: Developed a machine learning-based recommendation system for local businesses
+
+## Skills
+**Programming:** JavaScript (ES6+), Python, Java, SQL, TypeScript
+**Web Technologies:** React, Angular, Node.js, Express, HTML5, CSS3, RESTful APIs, GraphQL
+**Certifications**: AWS Certified Developer, Certified Scrum Master (CSM)
+**Tools & Methodologies:** Git, Jira, Agile/Scrum, Test-Driven Development (TDD)
+
+## Projects
+
+### **Open Source Contribution**
+github.com/popular-framework/core
+- Contributed to a popular open-source framework, fixing bugs and improving documentation
+- Implemented a new feature for handling asynchronous state management
+- Collaborated with the community through pull requests and code reviews
+            </main>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const inputFields = document.querySelectorAll('.input-field');
+                inputFields.forEach(field => {
+                    const markdown = field.textContent.trim();
+                    field.innerHTML = marked.parse(markdown);
+                });
+            });
+        </script>
+    </div>
+    </body>
+</html>

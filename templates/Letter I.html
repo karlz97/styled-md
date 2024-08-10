@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="template-meta" 
+            template-name="Letter I" 
+            template-tag="letter, clean" 
+            template-description="A clean and concise letter template suitable for formal correspondence."
+            template-author="Styled-md"
+        />
+        <div id="template-instruction">
+Use regular paragraphs for sender's address and date. Main content should be in regular paragraphs. Use '**bold**' for emphasis." 
+        </div>
+        <title>Beautiful Letter</title>
+        <link rel="stylesheet" href="Letter I.css" />
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+    <body>
+        <div class="page-body">
+        <div class="letter-container">
+            <header>
+                <div>
+                    <div class="letter-address input-field" name="Top left">
+John Doe
+
+123 Main Street
+
+City, Country 12345
+                    </div>
+                </div>
+                <div class="letter-date input-field" name="Top right">
+July 27, 2024
+                </div>
+            </header>
+            <main>
+                <div class="letter-main input-field" name="Content">
+Dear Jane,
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nullam ac erat ante Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nullam ac erat ante. **ipsum dolor sit amet, consectetur adipiscing elit.**
+
+Tincidunt arcu proin velit urna feugiat morbi. Per nam tempus lobortis pulvinar ante tristique dictum malesuada. Eget in commodo nec taciti sollicitudin varius class sodales varius. Rutrum himenaeos diam quisque in nulla eros.
+
+Nest habitasse pharetra placerat lacinia nulla donec nulla. Urna hendrerit eros convallis tincidunt vehicula commodo ligula cursus. Class vestibulum sodales etiam senectus leo fermentum elementum donec? Inceptos justo primis phasellus rutrum orci. Rhoncus hendrerit quam odio dignissim vestibulum natoque lobortis.
+                </div>
+            </main>
+            <div class="spacer"></div>
+            <footer class="letter-footer input-field">
+Sincerely,
+
+John Doe
+            </footer>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const inputFields = document.querySelectorAll('.input-field');
+                inputFields.forEach(field => {
+                    const markdown = field.innerHTML.trim();
+                    field.innerHTML = marked.parse(markdown);
+                });
+            });
+        </script>
+    </div>
+    </body>
+</html>
