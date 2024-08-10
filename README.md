@@ -1,6 +1,5 @@
 # Styled-md
-Create **beautiful**
-**portable**, **printable** files from markdown!￼
+Create **beautiful**, **portable**, **printable** files from markdown!￼[**> Start to use**](https://karlz97.github.io/styled-md/)
 
 ![Image](https://github.com/karlz97/styled-md/blob/main/readme-templates-demo.png?raw=true)
 
